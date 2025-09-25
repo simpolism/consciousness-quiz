@@ -27,6 +27,7 @@ interface QuizElements {
   result: HTMLElement;
   introCard: HTMLDivElement;
   startBtn: HTMLButtonElement;
+  rejectBtn: HTMLButtonElement;
   actionsBar: HTMLDivElement;
 }
 
@@ -40,8 +41,9 @@ const template = `
       <div class="card" id="quiz">
       <div class="intro-card" id="introCard">
         <h2>How to approach this quiz</h2>
-        <p>These prompts map philosophical stances about consciousness. There are no right answers—use your intuitions, and feel free to consult the “More context” dropdowns if a question feels vague. When ready, start the quiz below.</p>
+        <p>These prompts map philosophical stances about consciousness. There are no right answers—use your intuitions, and feel free to consult the "More context" dropdowns if a question feels vague. When ready, start the quiz below.</p>
         <button class="control-button control-button--choice" id="startQuizBtn">Begin the quiz</button>
+        <button class="control-button control-button--ghost" id="rejectConceptBtn">Consciousness is an incoherent concept</button>
       </div>
       <div class="card-actions" id="quizActions">
         <button class="card-action control-button control-button--ghost" id="backBtn" title="Go back one step">← Back</button>
@@ -90,14 +92,16 @@ export class QuizApp {
       result: this.getElement('#result'),
       introCard: this.getElement('#introCard'),
       startBtn: this.getElement('#startQuizBtn'),
+      rejectBtn: this.getElement('#rejectConceptBtn'),
       actionsBar: this.getElement('#quizActions'),
     };
 
     this.elements.backBtn.addEventListener('click', () => this.onBack());
     this.elements.restartBtn.addEventListener('click', () => this.restart());
     this.elements.startBtn.addEventListener('click', () => this.startQuiz());
+    this.elements.rejectBtn.addEventListener('click', () => this.rejectConcept());
 
-    [this.elements.backBtn, this.elements.restartBtn, this.elements.startBtn].forEach((btn) => {
+    [this.elements.backBtn, this.elements.restartBtn, this.elements.startBtn, this.elements.rejectBtn].forEach((btn) => {
       btn.addEventListener('pointerup', () => btn.blur());
       btn.addEventListener('pointerleave', () => btn.blur());
     });
@@ -237,6 +241,16 @@ export class QuizApp {
   private startQuiz(): void {
     this.elements.introCard.hidden = true;
     this.state.current = startId;
+    this.state.history = [];
+    this.elements.backBtn.hidden = true;
+    this.setOptionControls({ visible: false, disabled: true });
+    this.elements.actionsBar.hidden = false;
+    this.renderNode();
+  }
+
+  private rejectConcept(): void {
+    this.elements.introCard.hidden = true;
+    this.state.current = 'consciousness_incoherent';
     this.state.history = [];
     this.elements.backBtn.hidden = true;
     this.setOptionControls({ visible: false, disabled: true });

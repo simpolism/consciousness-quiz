@@ -54,6 +54,31 @@ export const nodes: NodeMap = {
     ],
   },
 
+  consciousness_incoherent: makeEnd(
+    'consciousness_incoherent',
+    'meta',
+    'Consciousness Skepticism',
+    `You reject consciousness as a meaningful scientific or philosophical concept that leads to productive inquiry.`,
+    [
+      {
+        thinker: 'Patricia Churchland',
+        work: 'Churchland, P. (1986). Neurophilosophy: Toward a Unified Science of Mind-Brain. MIT Press.',
+      },
+      {
+        thinker: 'Paul Churchland',
+        work: 'Churchland, P. (1981). Eliminative Materialism and the Propositional Attitudes. Journal of Philosophy, 78(2).',
+      },
+      {
+        thinker: 'Keith Frankish',
+        work: 'Frankish, K. (2016). Not So Hard: Why the Problem of Consciousness is a Pseudo-Problem. Journal of Consciousness Studies, 23(9-10).',
+      },
+      {
+        thinker: 'Dennett, Daniel',
+        work: 'Dennett, D. (2005). Sweet Dreams: Philosophical Obstacles to a Science of Consciousness. MIT Press.',
+      },
+    ],
+  ),
+
   q0: makeQuestion(
     'q0',
     `Do you think humans could ever fully explain consciousness, even with future science?`,
@@ -1113,6 +1138,7 @@ const questionDetails: Partial<Record<NodeId, string>> = {
 };
 
 const endDetails: Partial<Record<NodeId, string>> = {
+  consciousness_incoherent: `Consciousness skeptics argue that "consciousness" is like "vitalism" or "phlogiston"—a prescientific concept that will be abandoned as neuroscience advances. They claim that terms like "qualia" and "subjective experience" pick out nothing coherent in nature, and that productive research focuses on specific cognitive functions rather than mysterious "inner experience." This position often aligns with eliminative materialism and defllationary approaches that dissolve rather than solve consciousness problems.`,
   mysterian: `Mysterianism stresses cognitive closure: our brains may lack the conceptual resources to ever bridge neural activity and felt experience. Advocates warn against overpromising on scientific reduction while encouraging humility toward the mind's limits.`,
   illusionism: `Illusionists reinterpret talk of qualia as shorthand for cognitive accessibility, narrative coherence, and control. The detail storyline emphasizes explanatory payoffs—deflating hard problems, aligning with predictive coding—while acknowledging the existential shock of calling experience a construct.`,
   human_exception: `Human-exception skeptics treat consciousness as a special emergent for our species while doubting it elsewhere. This stance typically leans on evolutionary history, linguistically thick self-models, or theological commitments that reserve subjectivity for Homo sapiens.`,

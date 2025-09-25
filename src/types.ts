@@ -2,6 +2,7 @@ export type Verdict = 'conscious' | 'not' | 'meta';
 
 export type NodeId =
   | 'target_select'
+  | 'consciousness_incoherent'
   | 'q0'
   | 'q0a'
   | 'mysterian'
