@@ -49,6 +49,19 @@ header p {
   margin: 6px 0 0;
   color: var(--muted);
 }
+.header-links {
+  margin-top: 12px;
+}
+.header-links a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+.header-links a:hover {
+  color: var(--accent-2);
+  text-decoration: underline;
+}
 .container {
   max-width: 900px;
   margin: 24px auto 60px;

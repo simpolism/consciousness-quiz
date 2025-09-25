@@ -23,6 +23,9 @@ const template = `
   <header>
     <h1>Consciousness 20Q — Master Quiz</h1>
     <p>Answer Yes/No to navigate the landscape of consciousness theories. Finish to discover your end state (theory + thinkers).</p>
+    <div class="header-links">
+      <a href="/all-positions.html">View All Positions →</a>
+    </div>
   </header>
 
   <div class="container">
