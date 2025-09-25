@@ -190,6 +190,13 @@ button:disabled {
 .thinkers strong {
   color: var(--accent);
 }
+.thinkers .thinker-name {
+  font-weight: 600;
+  color: var(--accent);
+}
+.thinkers em {
+  color: var(--muted);
+}
 
 .footer-controls {
   display: flex;
@@ -327,6 +334,14 @@ details summary {
   font-size: 0.82rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
+}
+
+.position-card .thinker-name {
+  color: #1f2937;
+}
+
+.position-card .thinkers em {
+  color: #475569;
 }
 
 .thinkers ul {

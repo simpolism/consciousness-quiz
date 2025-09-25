@@ -40,12 +40,17 @@ function getVerdictColor(verdict: Verdict): string {
 }
 
 function renderPositionCard(node: EndNode): string {
-  const thinkersHtml =
-    node.thinkers.length > 0
+  const referencesHtml =
+    node.references.length > 0
       ? `<div class="thinkers">
-        <strong>Key Thinkers:</strong>
+        <strong>Key Thinkers & Sources:</strong>
         <ul>
-          ${node.thinkers.map((thinker) => `<li>${thinker}</li>`).join('')}
+          ${node.references
+            .map(
+              (ref) =>
+                `<li><span class="thinker-name">${ref.thinker}</span> — <em>${ref.work}</em></li>`,
+            )
+            .join('')}
         </ul>
       </div>`
       : '';
@@ -57,13 +62,16 @@ function renderPositionCard(node: EndNode): string {
       </div>
       <h2>${node.title}</h2>
       <p class="description">${node.desc}</p>
-      ${thinkersHtml}
+      ${referencesHtml}
     </div>
   `;
 }
 
 function renderPage(): void {
   const app = document.querySelector<HTMLDivElement>('#app');
+  if (!app) {
+    throw new Error('App root element not found');
+  }
 
   let selectedVerdict: Verdict | 'all' = 'all';
 

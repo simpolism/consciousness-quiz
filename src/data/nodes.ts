@@ -1,14 +1,14 @@
-import { EndNode, Node, NodeId, NodeMap, QuestionNode, Verdict } from '../types';
+import { EndNode, Node, NodeId, NodeMap, QuestionNode, Reference, Verdict } from '../types';
 
-type EndParams = [NodeId, Verdict, string, string, string[]?];
+type EndParams = [NodeId, Verdict, string, string, Reference[]?];
 
-const makeEnd = (...[id, verdict, title, desc, thinkers = []]: EndParams): EndNode => ({
+const makeEnd = (...[id, verdict, title, desc, references = []]: EndParams): EndNode => ({
   kind: 'end',
   id,
   verdict,
   title,
   desc,
-  thinkers,
+  references,
 });
 
 const makeQuestion = (id: NodeId, text: string, yes: NodeId, no: NodeId): QuestionNode => ({
@@ -32,7 +32,12 @@ export const nodes: NodeMap = {
     'meta',
     'Mysterianism',
     `You hold that human minds cannot in principle solve the problem of consciousness, so we can't decisively ascribe it — even to ourselves.`,
-    ['Colin McGinn'],
+    [
+      {
+        thinker: 'Colin McGinn',
+        work: 'McGinn, C. (1991). The Problem of Consciousness. Blackwell.',
+      },
+    ],
   ),
 
   q1: makeQuestion(
@@ -61,7 +66,20 @@ export const nodes: NodeMap = {
     'meta',
     'Illusionism / Multiple Drafts',
     `Consciousness is a constructed user-illusion; even our own sense of it is a narrative assembled by cognitive processes.`,
-    ['Daniel Dennett', 'Keith Frankish', 'Susan Blackmore'],
+    [
+      {
+        thinker: 'Daniel Dennett',
+        work: 'Dennett, D. (1991). Consciousness Explained. Little, Brown.',
+      },
+      {
+        thinker: 'Keith Frankish',
+        work: 'Frankish, K. (2016). Illusionism as a Theory of Consciousness. Journal of Consciousness Studies, 23(11-12).',
+      },
+      {
+        thinker: 'Susan Blackmore',
+        work: 'Blackmore, S. (2018). Seeing Myself: The New Science of Out-of-Body Experiences. Robinson.',
+      },
+    ],
   ),
 
   human_exception: makeEnd(
@@ -69,7 +87,12 @@ export const nodes: NodeMap = {
     'not',
     'Human-Exceptional Skepticism',
     `You deny this object's consciousness as illusory, but treat human consciousness as special and genuine.`,
-    ['Common skeptical stance; no canonical defender'],
+    [
+      {
+        thinker: 'John Searle',
+        work: 'Searle, J. (1992). The Rediscovery of the Mind. MIT Press.',
+      },
+    ],
   ),
 
   q2a1: makeQuestion(
@@ -84,7 +107,16 @@ export const nodes: NodeMap = {
     'conscious',
     'Integrated Information Theory (IIT)',
     `Consciousness scales with the degree to which information is integrated into a unified cause–effect structure (Φ).`,
-    ['Giulio Tononi', 'Christof Koch'],
+    [
+      {
+        thinker: 'Giulio Tononi',
+        work: 'Tononi, G. (2004). An Information Integration Theory of Consciousness. BMC Neuroscience, 5(42).',
+      },
+      {
+        thinker: 'Christof Koch',
+        work: 'Tononi, G., & Koch, C. (2015). Consciousness: Here, There and Everywhere? Philosophical Transactions of the Royal Society B, 370(1668).',
+      },
+    ],
   ),
 
   q2a2: makeQuestion(
@@ -99,7 +131,16 @@ export const nodes: NodeMap = {
     'conscious',
     'Global Workspace Theory (GWT)',
     `A mental item is conscious when it enters a "global workspace" that broadcasts it across the system, making it accessible to multiple cognitive processes.`,
-    ['Bernard Baars', 'Stanislas Dehaene'],
+    [
+      {
+        thinker: 'Bernard Baars',
+        work: 'Baars, B. (1988). A Cognitive Theory of Consciousness. Cambridge University Press.',
+      },
+      {
+        thinker: 'Stanislas Dehaene',
+        work: 'Dehaene, S. (2014). Consciousness and the Brain. Viking.',
+      },
+    ],
   ),
 
   q2a3: makeQuestion(
@@ -114,7 +155,20 @@ export const nodes: NodeMap = {
     'conscious',
     'Predictive Processing / Free Energy Principle',
     `Experience reflects a generative model predicting inputs and minimizing prediction error.`,
-    ['Karl Friston', 'Andy Clark', 'Jakob Hohwy'],
+    [
+      {
+        thinker: 'Karl Friston',
+        work: 'Friston, K. (2010). The Free-Energy Principle: A Unified Brain Theory? Nature Reviews Neuroscience, 11(2).',
+      },
+      {
+        thinker: 'Andy Clark',
+        work: 'Clark, A. (2016). Surfing Uncertainty: Prediction, Action, and the Embodied Mind. Oxford University Press.',
+      },
+      {
+        thinker: 'Jakob Hohwy',
+        work: 'Hohwy, J. (2013). The Predictive Mind. Oxford University Press.',
+      },
+    ],
   ),
 
   q2a4: makeQuestion(
@@ -129,7 +183,16 @@ export const nodes: NodeMap = {
     'conscious',
     'Higher-Order Thought Theory (HOT)',
     `A state is conscious when there is a higher-order representation of that state — awareness of awareness.`,
-    ['David Rosenthal', 'Peter Carruthers'],
+    [
+      {
+        thinker: 'David Rosenthal',
+        work: 'Rosenthal, D. (2005). Consciousness and Mind. Oxford University Press.',
+      },
+      {
+        thinker: 'Peter Carruthers',
+        work: 'Carruthers, P. (2000). Phenomenal Consciousness. Cambridge University Press.',
+      },
+    ],
   ),
 
   q2a5: makeQuestion(
@@ -144,7 +207,12 @@ export const nodes: NodeMap = {
     'conscious',
     'Recurrent Processing Theory (RPT)',
     `Conscious perception depends on recurrent cortical processing (feedback loops) within sensory cortices.`,
-    ['Victor Lamme'],
+    [
+      {
+        thinker: 'Victor Lamme',
+        work: 'Lamme, V. (2006). Towards a True Neural Stance on Consciousness. Trends in Cognitive Sciences, 10(11).',
+      },
+    ],
   ),
 
   q2a6: makeQuestion(
@@ -159,7 +227,12 @@ export const nodes: NodeMap = {
     'conscious',
     'Attention Schema Theory (AST)',
     `Consciousness arises from a control system modeling and guiding its own attention via a simplified internal schema.`,
-    ['Michael Graziano'],
+    [
+      {
+        thinker: 'Michael Graziano',
+        work: 'Graziano, M. (2013). Consciousness and the Social Brain. Oxford University Press.',
+      },
+    ],
   ),
 
   q2a7: makeQuestion(
@@ -174,7 +247,20 @@ export const nodes: NodeMap = {
     'conscious',
     'Embodied / Enactive Cognition',
     `Mind is enacted in organism–environment dynamics; experience depends on embodied skills and context.`,
-    ['Francisco Varela', 'Evan Thompson', 'Alva Noë', 'Maurice Merleau-Ponty', 'Martin Heidegger'],
+    [
+      {
+        thinker: 'Francisco Varela',
+        work: 'Varela, F., Thompson, E., & Rosch, E. (1991). The Embodied Mind. MIT Press.',
+      },
+      {
+        thinker: 'Alva Noë',
+        work: 'Noë, A. (2004). Action in Perception. MIT Press.',
+      },
+      {
+        thinker: 'Maurice Merleau-Ponty',
+        work: 'Merleau-Ponty, M. (1962). Phenomenology of Perception. Routledge.',
+      },
+    ],
   ),
 
   q2a8: makeQuestion(
@@ -189,7 +275,20 @@ export const nodes: NodeMap = {
     'conscious',
     'Panpsychism',
     `All matter carries proto-conscious properties; complex systems organize them into richer consciousness.`,
-    ['Galen Strawson', 'Philip Goff', 'Alfred North Whitehead'],
+    [
+      {
+        thinker: 'Galen Strawson',
+        work: 'Strawson, G. (2006). Realistic Monism: Why Physicalism Entails Panpsychism. Journal of Consciousness Studies, 13(10-11).',
+      },
+      {
+        thinker: 'Philip Goff',
+        work: 'Goff, P. (2017). Consciousness and Fundamental Reality. Oxford University Press.',
+      },
+      {
+        thinker: 'Alfred North Whitehead',
+        work: 'Whitehead, A. N. (1929). Process and Reality. Macmillan.',
+      },
+    ],
   ),
 
   q2a8a: makeQuestion(
@@ -204,7 +303,20 @@ export const nodes: NodeMap = {
     'conscious',
     'Russellian / Neutral Monism',
     `Matter has built-in qualitative grounds for consciousness — neither strictly mental nor purely physical.`,
-    ['Bertrand Russell', 'David Chalmers (Russellian monism)', 'Sam Coleman'],
+    [
+      {
+        thinker: 'Bertrand Russell',
+        work: 'Russell, B. (1927). The Analysis of Matter. Kegan Paul.',
+      },
+      {
+        thinker: 'David Chalmers',
+        work: 'Chalmers, D. (2013). Panpsychism and Panprotopsychism. Amherst Lecture in Philosophy, 8.',
+      },
+      {
+        thinker: 'Sam Coleman',
+        work: 'Coleman, S. (2015). Neuro-Cosmological Panpsychism. In Consciousness and the Ontology of Properties (Routledge).',
+      },
+    ],
   ),
 
   q2a8b: makeQuestion(
@@ -219,7 +331,20 @@ export const nodes: NodeMap = {
     'conscious',
     'Dual Aspect Theory',
     `Mental and physical are two aspects of the same fundamental reality.`,
-    ['Baruch Spinoza', 'Bertrand Russell', 'Thomas Nagel'],
+    [
+      {
+        thinker: 'Baruch Spinoza',
+        work: 'Spinoza, B. (1677). Ethics. (see Part II).',
+      },
+      {
+        thinker: 'Thomas Nagel',
+        work: 'Nagel, T. (1979). Panpsychism. In Mortal Questions (Cambridge University Press).',
+      },
+      {
+        thinker: 'Bertrand Russell',
+        work: 'Russell, B. (1948). Human Knowledge: Its Scope and Limits. Simon & Schuster.',
+      },
+    ],
   ),
 
   q2a9: makeQuestion(
@@ -234,7 +359,20 @@ export const nodes: NodeMap = {
     'conscious',
     'Idealism / Cosmopsychism',
     `Consciousness is fundamental and universal; individual minds are aspects or partitions of a larger mind.`,
-    ['George Berkeley', 'Bernardo Kastrup', 'G.W.F. Hegel'],
+    [
+      {
+        thinker: 'George Berkeley',
+        work: 'Berkeley, G. (1710). A Treatise Concerning the Principles of Human Knowledge.',
+      },
+      {
+        thinker: 'Bernardo Kastrup',
+        work: 'Kastrup, B. (2014). Why Materialism Is Baloney. Iff Books.',
+      },
+      {
+        thinker: 'G.W.F. Hegel',
+        work: 'Hegel, G. W. F. (1807). Phenomenology of Spirit. (See sections on Spirit).',
+      },
+    ],
   ),
 
   q2a10: makeQuestion(
@@ -249,7 +387,20 @@ export const nodes: NodeMap = {
     'conscious',
     'Substance Dualism',
     `Mind is an immaterial thinking substance distinct from matter; consciousness flows from the soul.`,
-    ['René Descartes', 'Thomas Aquinas', 'Richard Swinburne'],
+    [
+      {
+        thinker: 'René Descartes',
+        work: 'Descartes, R. (1641). Meditations on First Philosophy (Meditation VI).',
+      },
+      {
+        thinker: 'Thomas Aquinas',
+        work: 'Aquinas, T. (1274). Summa Theologica, Part I, Question 75.',
+      },
+      {
+        thinker: 'Richard Swinburne',
+        work: 'Swinburne, R. (1977). The Evolution of the Soul. Oxford University Press.',
+      },
+    ],
   ),
 
   q2a10a: makeQuestion(
@@ -264,7 +415,20 @@ export const nodes: NodeMap = {
     'conscious',
     'Property Dualism',
     `Mental properties are irreducible to physical properties, though they may arise from physical substance.`,
-    ['David Chalmers (naturalistic dualism)', 'Frank Jackson', 'Tim Crane'],
+    [
+      {
+        thinker: 'David Chalmers',
+        work: 'Chalmers, D. (1996). The Conscious Mind. Oxford University Press.',
+      },
+      {
+        thinker: 'Frank Jackson',
+        work: 'Jackson, F. (1982). Epiphenomenal Qualia. Philosophical Quarterly, 32(127).',
+      },
+      {
+        thinker: 'Tim Crane',
+        work: 'Crane, T. (2001). Elements of Mind. Oxford University Press.',
+      },
+    ],
   ),
 
   q2a10b: makeQuestion(
@@ -279,7 +443,16 @@ export const nodes: NodeMap = {
     'conscious',
     'Epiphenomenalism',
     `Experience is real yet causally inert; physical processes run things while consciousness floats alongside.`,
-    ['Thomas Huxley', 'Frank Jackson (early view)'],
+    [
+      {
+        thinker: 'Thomas Huxley',
+        work: 'Huxley, T. (1874). On the Hypothesis that Animals are Automata. Nature, 10.',
+      },
+      {
+        thinker: 'Frank Jackson',
+        work: "Jackson, F. (1986). What Mary Didn't Know. Journal of Philosophy, 83(5).",
+      },
+    ],
   ),
 
   q2a11: makeQuestion(
@@ -294,7 +467,20 @@ export const nodes: NodeMap = {
     'conscious',
     'Representationalism / Intentionalism',
     `Consciousness is exhaustively about representing the world; experience is transparent to its objects.`,
-    ['Fred Dretske', 'Michael Tye', 'William Lycan'],
+    [
+      {
+        thinker: 'Fred Dretske',
+        work: 'Dretske, F. (1995). Naturalizing the Mind. MIT Press.',
+      },
+      {
+        thinker: 'Michael Tye',
+        work: 'Tye, M. (1995). Ten Problems of Consciousness. MIT Press.',
+      },
+      {
+        thinker: 'William Lycan',
+        work: 'Lycan, W. (1996). Consciousness and Experience. MIT Press.',
+      },
+    ],
   ),
   q2a11a: makeQuestion(
     'q2a11a',
@@ -308,7 +494,16 @@ export const nodes: NodeMap = {
     'conscious',
     'Access/Phenomenal Distinction',
     `There are two types: access consciousness (information availability) and phenomenal consciousness (subjective experience).`,
-    ['Ned Block', 'David Chalmers'],
+    [
+      {
+        thinker: 'Ned Block',
+        work: 'Block, N. (1995). On a Confusion about a Function of Consciousness. Behavioral and Brain Sciences, 18(2).',
+      },
+      {
+        thinker: 'David Chalmers',
+        work: 'Chalmers, D. (2004). The Representational Character of Experience. In The Future for Philosophy (Oxford University Press).',
+      },
+    ],
   ),
 
   q2a12: makeQuestion(
@@ -323,7 +518,20 @@ export const nodes: NodeMap = {
     'conscious',
     'Phenomenology',
     `The presence of first-person "what-it's-like-ness" suffices to say a state is conscious.`,
-    ['Edmund Husserl', 'Thomas Nagel', 'David Chalmers'],
+    [
+      {
+        thinker: 'Edmund Husserl',
+        work: 'Husserl, E. (1913). Ideas Pertaining to a Pure Phenomenology and to a Phenomenological Philosophy. Nijhoff.',
+      },
+      {
+        thinker: 'Thomas Nagel',
+        work: 'Nagel, T. (1974). What Is It Like to Be a Bat? The Philosophical Review, 83(4).',
+      },
+      {
+        thinker: 'David Chalmers',
+        work: 'Chalmers, D. (1995). Facing Up to the Problem of Consciousness. Journal of Consciousness Studies, 2(3).',
+      },
+    ],
   ),
 
   q2a12a: makeQuestion(
@@ -338,7 +546,20 @@ export const nodes: NodeMap = {
     'conscious',
     'Functionalism / Computationalism',
     `Consciousness is as consciousness does: if the functional organization and behavior fit, that suffices.`,
-    ['Hilary Putnam', 'David Lewis', 'Daniel Dennett'],
+    [
+      {
+        thinker: 'Hilary Putnam',
+        work: 'Putnam, H. (1960). Minds and Machines. In Sidney Hook (Ed.), Dimensions of Mind. NYU Press.',
+      },
+      {
+        thinker: 'David Lewis',
+        work: 'Lewis, D. (1972). Psychophysical and Theoretical Identifications. Australasian Journal of Philosophy, 50(3).',
+      },
+      {
+        thinker: 'Daniel Dennett',
+        work: 'Dennett, D. (1978). Brainstorms. MIT Press.',
+      },
+    ],
   ),
 
   q2a12b: makeQuestion(
@@ -353,7 +574,16 @@ export const nodes: NodeMap = {
     'conscious',
     'Biological Functionalism',
     `Consciousness requires functional organization that could theoretically be multiply realized but with biological constraints.`,
-    ['Ned Block', 'Joseph Levine'],
+    [
+      {
+        thinker: 'Ned Block',
+        work: 'Block, N. (2007). Consciousness, Accessibility, and the Mesh between Psychology and Neuroscience. Behavioral and Brain Sciences, 30(5-6).',
+      },
+      {
+        thinker: 'Joseph Levine',
+        work: 'Levine, J. (1983). Materialism and Qualia: The Explanatory Gap. Pacific Philosophical Quarterly, 64(4).',
+      },
+    ],
   ),
 
   q2a12c: makeQuestion(
@@ -368,7 +598,20 @@ export const nodes: NodeMap = {
     'conscious',
     'Emergent Physicalism',
     `Consciousness strongly emerges from highly organized physical systems, beyond what behavior or micro-physics alone can explain.`,
-    ['C.D. Broad', "Timothy O'Connor", 'Roger Sperry'],
+    [
+      {
+        thinker: 'C.D. Broad',
+        work: 'Broad, C. D. (1925). The Mind and Its Place in Nature. Kegan Paul.',
+      },
+      {
+        thinker: "Timothy O'Connor",
+        work: "O'Connor, T. (1994). Emergent Properties. American Philosophical Quarterly, 31(2).",
+      },
+      {
+        thinker: 'Roger Sperry',
+        work: 'Sperry, R. (1991). In Defense of Mentalism and Emergent Interaction. Journal of Mind and Behavior, 12(2).',
+      },
+    ],
   ),
 
   q2a13: makeQuestion(
@@ -383,7 +626,20 @@ export const nodes: NodeMap = {
     'conscious',
     'Recognition / Social Theories',
     `Self-consciousness emerges in relations of recognition (self through other) and social mirroring.`,
-    ['G.W.F. Hegel', 'Jacques Lacan', 'Axel Honneth'],
+    [
+      {
+        thinker: 'G.W.F. Hegel',
+        work: 'Hegel, G. W. F. (1807). Phenomenology of Spirit (Chapter IV: Lordship and Bondage).',
+      },
+      {
+        thinker: 'Jacques Lacan',
+        work: 'Lacan, J. (1949). The Mirror Stage as Formative of the I. Écrits.',
+      },
+      {
+        thinker: 'Axel Honneth',
+        work: 'Honneth, A. (1995). The Struggle for Recognition. Polity Press.',
+      },
+    ],
   ),
 
   q2a13a: makeQuestion(
@@ -398,7 +654,20 @@ export const nodes: NodeMap = {
     'conscious',
     'Information Closure Theory',
     `Consciousness arises from informational closure and self-referential processing in complex systems.`,
-    ['Chris Fields', 'Max Tegmark', 'Scott Aaronson'],
+    [
+      {
+        thinker: 'Chris Fields',
+        work: 'Fields, C. (2014). The Evolution of Consciousness as a Probabilistic Emergence. Information, 5(1).',
+      },
+      {
+        thinker: 'Max Tegmark',
+        work: 'Tegmark, M. (2014). Consciousness as a State of Matter. New Journal of Physics, 16(3).',
+      },
+      {
+        thinker: 'Scott Aaronson',
+        work: 'Aaronson, S. (2014). Why I Am Not an Integrated Information Theorist (or, The Unconscious Expander). MIT CSAIL Blog.',
+      },
+    ],
   ),
 
   q5: makeQuestion(
@@ -420,7 +689,16 @@ export const nodes: NodeMap = {
     'meta',
     'Eliminativism',
     `Our common-sense mental categories (like "qualia") are errors; the right neuroscience will replace them.`,
-    ['Patricia Churchland', 'Paul Churchland'],
+    [
+      {
+        thinker: 'Patricia Churchland',
+        work: 'Churchland, P. (1986). Neurophilosophy. MIT Press.',
+      },
+      {
+        thinker: 'Paul Churchland',
+        work: 'Churchland, P. (1981). Eliminative Materialism and the Propositional Attitudes. Journal of Philosophy, 78(2).',
+      },
+    ],
   ),
 
   q5a2: makeQuestion(
@@ -442,7 +720,20 @@ export const nodes: NodeMap = {
     'meta',
     'No-Self (Buddhist / Metzinger)',
     `The "self" is a process without enduring essence; consciousness does not entail a metaphysical subject.`,
-    ['Theravada Buddhism', 'Nagarjuna (Mahayana)', 'Thomas Metzinger'],
+    [
+      {
+        thinker: 'Theravada Canon',
+        work: 'Anatta-Lakkhana Sutta (SN 22.59).',
+      },
+      {
+        thinker: 'Nāgārjuna',
+        work: 'Nāgārjuna (c. 2nd century). Mūlamadhyamakakārikā.',
+      },
+      {
+        thinker: 'Thomas Metzinger',
+        work: 'Metzinger, T. (2003). Being No One. MIT Press.',
+      },
+    ],
   ),
 
   q8: makeQuestion(
@@ -457,7 +748,20 @@ export const nodes: NodeMap = {
     'not',
     'Biological Naturalism (restriction)',
     `Only living brains generate consciousness; this object lacks the requisite biology.`,
-    ['John Searle', 'Antonio Damasio', 'Gerald Edelman'],
+    [
+      {
+        thinker: 'John Searle',
+        work: 'Searle, J. (1992). The Rediscovery of the Mind. MIT Press.',
+      },
+      {
+        thinker: 'Antonio Damasio',
+        work: 'Damasio, A. (1999). The Feeling of What Happens. Harcourt.',
+      },
+      {
+        thinker: 'Gerald Edelman',
+        work: 'Edelman, G., & Tononi, G. (2000). A Universe of Consciousness. Basic Books.',
+      },
+    ],
   ),
 
   q8b: makeQuestion(
@@ -472,7 +776,20 @@ export const nodes: NodeMap = {
     'not',
     'Neurobiological Localism (restriction)',
     `Consciousness hinges on particular neural hubs (e.g., thalamocortical loops, claustrum) absent in the target.`,
-    ['Francis Crick', 'Christof Koch', 'Gerald Edelman'],
+    [
+      {
+        thinker: 'Francis Crick',
+        work: 'Crick, F., & Koch, C. (2003). A Framework for Consciousness. Nature Neuroscience, 6(2).',
+      },
+      {
+        thinker: 'Christof Koch',
+        work: 'Koch, C. (2004). The Quest for Consciousness. Roberts & Company.',
+      },
+      {
+        thinker: 'Gerald Edelman',
+        work: 'Edelman, G. (1989). The Remembered Present. Basic Books.',
+      },
+    ],
   ),
 
   q8b2: makeQuestion(
@@ -487,7 +804,20 @@ export const nodes: NodeMap = {
     'not',
     'Embodiment Restriction',
     `Genuine consciousness requires lived embodiment and rich world engagement the target lacks.`,
-    ['Hubert Dreyfus', 'Evan Thompson', 'Maurice Merleau-Ponty'],
+    [
+      {
+        thinker: 'Hubert Dreyfus',
+        work: 'Dreyfus, H. (1972). What Computers Can’t Do. MIT Press.',
+      },
+      {
+        thinker: 'Evan Thompson',
+        work: 'Thompson, E. (2007). Mind in Life. Harvard University Press.',
+      },
+      {
+        thinker: 'Maurice Merleau-Ponty',
+        work: 'Merleau-Ponty, M. (1962). Phenomenology of Perception. Routledge.',
+      },
+    ],
   ),
 
   q8b3: makeQuestion(
@@ -502,7 +832,16 @@ export const nodes: NodeMap = {
     'not',
     'Information Processing Restriction',
     `Consciousness requires specific information processing architectures that this system lacks.`,
-    ['Cognitive scientists', 'AI researchers'],
+    [
+      {
+        thinker: 'Allen Newell',
+        work: 'Newell, A., & Simon, H. (1976). Computer Science as Empirical Inquiry: Symbols and Search. Communications of the ACM, 19(3).',
+      },
+      {
+        thinker: 'Jerry Fodor',
+        work: "Fodor, J. (2000). The Mind Doesn't Work That Way. MIT Press.",
+      },
+    ],
   ),
 
   q8c: makeQuestion(
@@ -517,7 +856,16 @@ export const nodes: NodeMap = {
     'not',
     'Orchestrated Objective Reduction (Orch-OR)',
     `Consciousness arises from quantum processes in brain microtubules not present in the target.`,
-    ['Roger Penrose', 'Stuart Hameroff'],
+    [
+      {
+        thinker: 'Roger Penrose',
+        work: 'Penrose, R. (1994). Shadows of the Mind. Oxford University Press.',
+      },
+      {
+        thinker: 'Stuart Hameroff',
+        work: 'Hameroff, S., & Penrose, R. (2014). Consciousness in the Universe. Physics of Life Reviews, 11(1).',
+      },
+    ],
   ),
 
   q8d: makeQuestion(
@@ -532,7 +880,20 @@ export const nodes: NodeMap = {
     'not',
     'Dualist Exclusion',
     `Only ensouled beings are conscious; the target lacks a soul.`,
-    ['Thomas Aquinas', 'René Descartes', 'Religious traditions'],
+    [
+      {
+        thinker: 'Thomas Aquinas',
+        work: 'Aquinas, T. (1274). Summa Theologica, Part I, Question 75.',
+      },
+      {
+        thinker: 'René Descartes',
+        work: 'Descartes, R. (1649). The Passions of the Soul.',
+      },
+      {
+        thinker: 'Catechism of the Catholic Church',
+        work: 'Catechism of the Catholic Church (1992), Part One, Section Two, Chapter One.',
+      },
+    ],
   ),
 
   q8e: makeQuestion(
@@ -547,14 +908,36 @@ export const nodes: NodeMap = {
     'not',
     'Behaviorism / Skeptical Restrictionism',
     `Without the right observable abilities, ascribing consciousness is unwarranted.`,
-    ['B.F. Skinner', 'Gilbert Ryle', 'John Searle (Chinese Room)'],
+    [
+      {
+        thinker: 'B.F. Skinner',
+        work: 'Skinner, B. F. (1953). Science and Human Behavior. Macmillan.',
+      },
+      {
+        thinker: 'Gilbert Ryle',
+        work: 'Ryle, G. (1949). The Concept of Mind. Hutchinson.',
+      },
+      {
+        thinker: 'John Searle',
+        work: 'Searle, J. (1980). Minds, Brains, and Programs. Behavioral and Brain Sciences, 3(3).',
+      },
+    ],
   ),
   restrictive_phys: makeEnd(
     'restrictive_phys',
     'not',
     'Restrictive Physicalism',
     `Only systems with special physical organization (such as particular brains) qualify; the target falls short.`,
-    ['Reductive physicalists', 'Type-identity theorists'],
+    [
+      {
+        thinker: 'U.T. Place',
+        work: 'Place, U. T. (1956). Is Consciousness a Brain Process? British Journal of Psychology, 47(1).',
+      },
+      {
+        thinker: 'J.J.C. Smart',
+        work: 'Smart, J. J. C. (1959). Sensations and Brain Processes. Philosophical Review, 68(2).',
+      },
+    ],
   ),
 };
 

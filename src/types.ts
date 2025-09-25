@@ -86,12 +86,17 @@ export interface QuestionNode extends BaseNode {
   no: NodeId;
 }
 
+export interface Reference {
+  thinker: string;
+  work: string;
+}
+
 export interface EndNode extends BaseNode {
   kind: 'end';
   verdict: Verdict;
   title: string;
   desc: string;
-  thinkers: string[];
+  references: Reference[];
 }
 
 export type Node = QuestionNode | EndNode;

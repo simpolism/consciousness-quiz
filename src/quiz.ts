@@ -163,7 +163,21 @@ export class QuizApp {
     wrapper.innerHTML = `
       <h2>${node.title} <span class="badge ${verdictClass}">${badgeLabel}</span></h2>
       <div class="meta">${node.desc}</div>
-      ${node.thinkers.length ? `<div class="thinkers"><strong>Thinkers:</strong> ${node.thinkers.join(', ')}</div>` : ''}
+      ${
+        node.references.length
+          ? `<div class="thinkers">
+        <strong>Thinkers & Sources:</strong>
+        <ul>
+          ${node.references
+            .map(
+              (ref) =>
+                `<li><span class="thinker-name">${ref.thinker}</span> — <em>${ref.work}</em></li>`,
+            )
+            .join('')}
+        </ul>
+      </div>`
+          : ''
+      }
       <div class="footer-controls">
         <button class="aux" id="viewPathBtn">View full path</button>
         <button class="aux" id="restartBtn2">⟲ Restart</button>
