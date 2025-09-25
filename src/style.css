@@ -103,12 +103,35 @@ header p {
   padding: 22px;
   margin-bottom: 16px;
 }
+.intro-card {
+  text-align: center;
+  display: grid;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+.intro-card[hidden] {
+  display: none;
+}
+.intro-card h2 {
+  margin: 0;
+  font-size: 1.6rem;
+  color: var(--text-strong);
+}
+.intro-card p {
+  margin: 0 auto;
+  max-width: 58ch;
+  line-height: 1.55;
+  color: var(--muted);
+}
 .card-actions {
   display: flex;
   justify-content: flex-start;
   gap: 8px;
   margin: -4px 0 12px;
   flex-wrap: wrap;
+}
+.card-actions[hidden] {
+  display: none;
 }
 .card-action {
   padding: 10px 14px;
@@ -122,6 +145,22 @@ header p {
 .question {
   font-size: 1.25rem;
   line-height: 1.4;
+}
+.question-text {
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+.question-detail {
+  margin-top: 8px;
+}
+.question-detail summary {
+  color: var(--accent-2);
+}
+.question-detail p {
+  margin: 8px 0 0;
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.55;
 }
 .question--label {
   font-size: 0.85rem;
@@ -268,6 +307,17 @@ button:disabled {
   font-size: 1rem;
   line-height: 1.5;
   margin-bottom: 18px;
+}
+.result-detail {
+  margin-bottom: 18px;
+}
+.result-detail summary {
+  color: var(--accent-2);
+}
+.result-detail p {
+  margin: 8px 0 0;
+  color: #a8bbd7;
+  line-height: 1.55;
 }
 .result-path {
   margin-top: 18px;
@@ -528,6 +578,19 @@ details summary {
   line-height: 1.55;
   margin-bottom: 14px;
   max-width: 50ch;
+}
+
+.position-detail {
+  margin: 12px 0 10px;
+}
+.position-detail summary {
+  color: #5376b2;
+  font-weight: 600;
+}
+.position-detail p {
+  margin: 8px 0 0;
+  line-height: 1.55;
+  color: #4f647f;
 }
 
 .position-card .thinkers {

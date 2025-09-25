@@ -57,20 +57,24 @@ function renderPositionCard(node: EndNode): string {
           ${node.references
             .map(
               (ref) =>
-                `<li><span class="thinker-name">${ref.thinker}</span> — <em>${ref.work}</em></li>`,
+                `<li><span class="thinker-name">${escapeHtml(ref.thinker)}</span> — <em>${escapeHtml(ref.work)}</em></li>`,
             )
             .join('')}
         </ul>
       </div>`
       : '';
+  const detailHtml = node.detail
+    ? `<details class="position-detail"><summary>More about this position</summary><p>${escapeHtml(node.detail)}</p></details>`
+    : '';
 
   return `
     <div class="position-card">
       <div class="verdict-badge" style="background-color: ${getVerdictColor(node.verdict)}">
         ${getVerdictLabel(node.verdict)}
       </div>
-      <h2>${node.title}</h2>
-      <p class="description">${node.desc}</p>
+      <h2>${escapeHtml(node.title)}</h2>
+      <p class="description">${escapeHtml(node.desc)}</p>
+      ${detailHtml}
       ${referencesHtml}
     </div>
   `;
@@ -96,7 +100,7 @@ function renderPage(): void {
     const normalizedSearch = searchTerm.trim().toLowerCase();
     const displayNodes = normalizedSearch
       ? filteredByVerdict.filter((node) => {
-          const haystack = [node.title, node.desc, ...node.references.map((ref) => `${ref.thinker} ${ref.work}`)]
+          const haystack = [node.title, node.desc, node.detail ?? '', ...node.references.map((ref) => `${ref.thinker} ${ref.work}`)]
             .join(' ')
             .toLowerCase();
           return haystack.includes(normalizedSearch);

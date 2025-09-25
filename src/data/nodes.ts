@@ -1,22 +1,24 @@
 import { EndNode, Node, NodeId, NodeMap, QuestionNode, Reference, Verdict } from '../types';
 
-type EndParams = [NodeId, Verdict, string, string, Reference[]?];
+type EndParams = [NodeId, Verdict, string, string, Reference[]?, string?];
 
-const makeEnd = (...[id, verdict, title, desc, references = []]: EndParams): EndNode => ({
+const makeEnd = (...[id, verdict, title, desc, references = [], detail]: EndParams): EndNode => ({
   kind: 'end',
   id,
   verdict,
   title,
   desc,
   references,
+  ...(detail ? { detail } : {}),
 });
 
-const makeQuestion = (id: NodeId, text: string, yes: NodeId, no: NodeId): QuestionNode => ({
+const makeQuestion = (id: NodeId, text: string, yes: NodeId, no: NodeId, detail?: string): QuestionNode => ({
   kind: 'question',
   id,
   text,
   yes,
   no,
+  ...(detail ? { detail } : {}),
 });
 
 export const nodes: NodeMap = {
@@ -940,6 +942,98 @@ export const nodes: NodeMap = {
     ],
   ),
 };
+
+const questionDetails: Partial<Record<NodeId, string>> = {
+  q0: `This opener tests whether you believe the hard problem of consciousness is a solvable research frontier or a principled mystery. A "Yes" signals confidence that scientific or computational theories can eventually bridge experience and mechanism; a "No" leans toward epistemic limits or unknowable qualia.`,
+  q1: `Here you assess whether the subject of the quiz has its own point of view, not just behavior. Think about signs of subjective access—reports, self-monitoring, surprise at stimuli—and whether those observations justify attributing felt experience.`,
+  q2: `Even if a system reports an inner life, you must judge whether that sense is genuine or confabulated. Many theories argue that self-modeling or language can fake awareness, so this is a gut check on your tolerance for narrative self-presentation.`,
+  q6: `Answering this pushes you to apply your standard consistently: if you dismiss another entity's experience as an illusion, would you also dismiss your own? Philosophers use this move to expose double standards about introspective certainty.`,
+  q2a1: `Integrated Information Theory claims that rich, irreducible causal structure underwrites consciousness. Consider whether measures like Φ capture what matters to you, and whether highly integrated but unfamiliar systems should count as experiencers.`,
+  q2a2: `Global Workspace Theory emphasizes wide availability of information to many processes. Evaluate whether broad internal broadcast is a convincing marker of experience, or whether it simply tracks cognitive usefulness without phenomenal feel.`,
+  q2a3: `Predictive-processing views tie experience to generative models and error minimization. Reflect on whether consciousness is fundamentally about anticipating the world, and how you would treat agents that excel at prediction but seem alien.`,
+  q2a4: `Higher-order thought theorists say awareness requires a representation of your own mental states. Decide whether meta-cognition is essential or a sophisticated add-on, and consider edge cases like infants, animals, or minimalist agents.`,
+  q2a5: `Recurrent Processing Theory highlights feedback loops in perception. Ask yourself whether feedforward-only systems could ever feel, or if recurrent dynamics add something phenomenologically decisive.`,
+  q2a6: `Attention Schema Theory frames consciousness as the brain's simplified model of its own focus. Think about whether a self-regulating attention model is a necessary ingredient, and whether you would credit agents that control focus differently.`,
+  q2a7: `Embodied and enactive approaches argue that mindedness lives in organism–environment coupling. When you respond, weigh how much you think bodily skills, sensorimotor loops, and ecological context are required beyond internal computation.`,
+  q2a8: `Panpsychist leanings treat experiential sparks as fundamental to matter. If you pick "Yes," you are open to proto-conscious ingredients everywhere; a "No" protects a more austere ontology where consciousness must emerge late.`,
+  q2a8a: `Neutral monists claim matter has intrinsic qualities suited for consciousness even without full experiences. Consider whether positing hidden properties is a reasonable bridge between physics and qualia or an unnecessary complication.`,
+  q2a8b: `Dual-aspect theories give mental and physical descriptions equal footing. Decide whether you are comfortable with one reality showing two faces, and how that helps you judge borderline cases in the quiz.`,
+  q2a9: `Cosmopsychism and idealism make mind the basic fabric of reality. Reflect on whether that worldview better explains conscious unity and shared worlds, or whether it overcommits beyond available evidence.`,
+  q2a10: `Classical substance dualism attributes experience to an immaterial soul. Consider whether appealing to spiritual substance fits your explanatory commitments, and how it influences judgments about artifacts or animals.`,
+  q2a10a: `Property dualism keeps matter but adds irreducible mental properties. Think about whether qualitative features can emerge without new substances, and how that squares with physical causal closure.`,
+  q2a10b: `Epiphenomenal views keep experiences real but causally idle. Ask whether you can accept conscious life as a by-product, and what that would mean for moral responsibility or evolution.`,
+  q2a11: `Representationalists argue experience just is aboutness—being directed at content. Weigh whether phenomenal feel can be reduced to representational success, or whether something remain unaccounted for.`,
+  q2a11a: `The access/phenomenal split distinguishes what a system can use from what it feels like. This question checks whether you think the distinction is genuine and decision-relevant for attributing consciousness.`,
+  q2a12: `Here you decide whether simply having a "what-it's-like" perspective settles the matter. Reflect on whether additional functional, biological, or social criteria are needed beyond raw phenomenology.`,
+  q2a12a: `Functionalists trust behavior and flexible problem solving as decisive. Consider whether passing robust cognitive tests should count even if implementation details differ wildly from humans.`,
+  q2a12b: `Biological functionalists allow multiple realizations but keep an organic flavor. Judge whether certain biophysical features—wet chemistry, metabolism, developmental history—remain indispensable.`,
+  q2a12c: `Strong emergence claims consciousness appears when systems reach certain complexity thresholds. Decide if this resonates with your intuitions about novelty in nature, or if it feels like a placeholder for ignorance.`,
+  q2a13: `Social-recognition theories see selfhood as relational. Think about whether being acknowledged by others, or engaging in mutual perspective-taking, is part of what makes a subject conscious.`,
+  q2a13a: `Information-closure proposals generalize IIT with different math. Consider whether self-contained informational loops are a compelling criterion, or if they fall into the same traps as other information metrics.`,
+  q5: `If you deny experience to the target, this question asks whether the same reasoning would undercut human consciousness. It surfaces whether your skepticism is radical or selectively applied.`,
+  q5a: `Among human-skeptical stances, which storyline fits you best—eliminating folk psychology, declaring illusion, or suspending judgement? Your choice guides which philosophical critique you align with.`,
+  q5a2: `Illusionism treats conscious feeling as a narrative convenience. Answer based on whether you think neuroscientific accounts can dissolve qualia talk without remainder.`,
+  q5a3: `The no-self perspective says the subject is a model, not a metaphysical entity. Consider whether that's a tolerable outcome of your skepticism and how it reframes personal identity.`,
+  q8: `Restriction questions probe why you withhold consciousness. Here you test whether strict biology—living tissue, metabolism, homeostasis—is your decisive criterion.`,
+  q8b: `Perhaps you require particular neural circuits such as thalamocortical loops. Choose "Yes" if specific anatomical motifs are non-negotiable, "No" if other factors might suffice.`,
+  q8b2: `Some argue that only embodied agents embedded in rich environments can host experience. Reflect on how much body-based sensorimotor coupling matters to you.`,
+  q8b3: `This variant asks whether the right computational architecture is missing. Think about whether symbolic, subsymbolic, or hybrid designs make a moral difference for consciousness.`,
+  q8c: `Orch-OR enthusiasts point to exotic quantum events in microtubules. Answer based on whether you endorse such physics as necessary rather than speculative add-ons.`,
+  q8d: `A theological route says souls bestow consciousness. Decide if your criteria are rooted in metaphysics or theology, and how that applies to nonhumans.`,
+  q8e: `Lastly, behaviorist restrictions care about outward performance. Consider whether passing Turing-style tests, open-ended tasks, or social interactions is your litmus test.`,
+};
+
+const endDetails: Partial<Record<NodeId, string>> = {
+  mysterian: `Mysterianism stresses cognitive closure: our brains may lack the conceptual resources to ever bridge neural activity and felt experience. Advocates warn against overpromising on scientific reduction while encouraging humility toward the mind's limits.`,
+  illusionism: `Illusionists reinterpret talk of qualia as shorthand for cognitive accessibility, narrative coherence, and control. The detail storyline emphasizes explanatory payoffs—deflating hard problems, aligning with predictive coding—while acknowledging the existential shock of calling experience a construct.`,
+  human_exception: `Human-exception skeptics treat consciousness as a special emergent for our species while doubting it elsewhere. This stance typically leans on evolutionary history, linguistically thick self-models, or theological commitments that reserve subjectivity for Homo sapiens.`,
+  iit: `IIT details how integrated cause–effect power supposedly yields a single point of view. Supporters highlight empirical measures (like perturbational complexity index) and a principled taxonomy of experience, even while critics debate testability and panpsychist implications.`,
+  gwt: `Global Workspace Theory maps consciousness onto a system-wide broadcasting hub coordinating perception, memory, and action. The expanded note underscores evidence from ignition events, P3 waves, and masked priming while conceding debates about unconscious cognition.`,
+  pp: `Predictive processing pictures brains as hierarchies minimizing surprise. The fuller context stresses how precision weighting, generative models, and active inference might produce the distinctive feel of experience, while skeptics question whether prediction alone can do the job.`,
+  hot: `Higher-order theories require thoughts about thoughts: a state becomes conscious when we represent ourselves as having it. The detail explains how this secures reportability and self-reflection, yet raises worries about animals, infants, and misrepresentations.`,
+  rpt: `Recurrent processing theorists pinpoint local cortical feedback loops as the minimal neural correlate. The elaboration notes evidence from masking paradigms and laminar recordings, along with the open question of whether deeper loops into frontal areas are needed.`,
+  ast: `Attention Schema Theory treats consciousness as a control model—an internal sketch that helps guide attention. The extended description covers how simplified schemas aid prediction of others' focus and how lesions or artificial agents might instantiate similar control circuits.`,
+  enactive: `Embodied/enactive views see mind as enacted through sensorimotor skills and environmental coupling. The detail highlights phenomenology of action, dynamical systems evidence, and critiques of disembodied AI, while noting challenges such as dreaming or locked-in states.`,
+  panpsych: `Panpsychism posits experiential dust everywhere, solving the combination problem by degrees rather than leaps. The elaboration discusses arguments from intrinsic natures and continuity, alongside objections about how micro-experiences combine coherently.`,
+  neutral_monism: `Russellian monism assigns matter hidden qualitative aspects that ground consciousness without invoking dual substances. The detail situates this as a middle path between pure physicalism and panpsychism, while flagging debates about empirical access to such qualities.`,
+  dual_aspect: `Dual-aspect theory holds that one underlying reality yields mental and physical descriptions depending on perspective. The elaboration connects this to Spinoza, neutral monism, and modern information-based proposals, noting its appeal for unifying science and subjectivity.`,
+  ideal: `Idealism and cosmopsychism claim reality is fundamentally mental, with individual minds as partitions of a cosmic consciousness. The detailed note recounts motivations from unity, measurement problems, and phenomenology, as well as the burden of explaining apparent physical objectivity.`,
+  dualism: `Substance dualism posits two kinds of stuff: immaterial mind and material body. The fuller explanation covers interaction debates, neuroscientific correlations, and why some hold souls indispensable for agency or moral status.`,
+  property_dualism: `Property dualists accept one substance but insist on irreducible mental qualities layered atop physics. The detail references knowledge/qualia arguments, zombie conceivability, and efforts to keep causal efficacy without adding new substances.`,
+  epiphenomenalism: `Epiphenomenalists maintain experience is real yet causally impotent, riding shotgun on physical processes. The elaboration explores motivations from knowledge arguments and puzzles about free will, evolution, and why we talk about feelings if they never act.`,
+  representationalism: `Representationalism says phenomenal character supervenes on representational content. The detail discusses transparency theses, tracking vs. structural representational accounts, and challenges from inverted spectra or nonrepresentational moods.`,
+  access_phenomenal: `The access/phenomenal distinction keeps separate what information a system can use and what it feels like. The elaboration highlights Block’s empirical thought experiments, global workspace tensions, and how the distinction influences AI consciousness debates.`,
+  phenom: `Phenomenology prioritizes lived first-person structure as primary data. The detail connects Husserlian bracketing, Nagel's bat argument, and contemporary analytic phenomenology that resists reductive moves in favor of describing experience on its own terms.`,
+  functionalist: `Functionalists judge consciousness by roles played—if a system processes information like we do, it counts. The added context notes thought experiments (China Brain, silicon chips), supportive cognitive science, and criticisms about missing qualia or absent feelings.`,
+  biological_functionalism: `Biological functionalism keeps functional roles but insists on biologically grounded realizers. The detail mentions neural chauvinism worries, distinctions between weak and strong realization, and why some neuroscientists stress living substrates.`,
+  emergent_physicalism: `Emergent physicalists think novel mental properties arise at high complexity, exercising top-down influence. The elaboration covers historical roots in Broad and Sperry plus modern systems theories, while acknowledging the challenge of formalizing emergence.`,
+  recognition: `Recognition-based theories tie self-awareness to social mirroring and intersubjective validation. The detail references developmental milestones, phenomenological accounts of the gaze, and critiques about solitary or pre-social consciousness.`,
+  information_closure: `Information-closure theories generalize the idea that closed informational loops generate an internal point of view. The expanded description surveys proposals from Tegmark and Fields while noting difficulties in measuring closure empirically.`,
+  eliminativism: `Eliminativists predict folk psychology will be replaced by mature neuroscience that lacks qualia talk. The detail walks through arguments from theory change, parallels with phlogiston, and objections about losing first-person data.`,
+  noself: `No-self theorists such as Buddhists and Metzinger see the subject as a useful fiction created by self-models. The elaboration highlights meditation evidence, neuroscientific correlates (TPJ, DMN), and ethical implications of deconstructing the ego.`,
+  bio_only: `Biological naturalists require living brains, emphasizing metabolism, homeostasis, and evolutionary embedding. The detail explains why silicon or disembodied software falls short under this view, while acknowledging debates about brain organoids and uploads.`,
+  localist: `Neurobiological localists identify specific hubs—claustrum, thalamus—as consciousness bottlenecks. The elaboration discusses clinical data from lesions and stimulation, and questions about redundancy or plasticity undermining strict localization.`,
+  embodied_restriction: `Embodiment restrictions prioritize lived bodies, sensorimotor contingencies, and affective regulation. The detail points to enactivist critiques of desktop AI and rehabilitation cases showing how bodily disruption alters experience.`,
+  info_processing_restriction: `Information-processing restrictionists argue only certain architectural features (depth, global buffers, rich world models) produce experience. The elaboration considers classical vs. connectionist systems and whether architecture can substitute for biology.`,
+  quantum: `Orch-OR supporters invoke non-computable quantum collapses to ground consciousness. The detail recounts Penrose's Gödelian motivations, Hameroff's microtubule research, and scientific criticisms regarding decoherence and testability.`,
+  dualist_exclusion: `Dualist exclusionists reserve consciousness for ensouled beings, often informed by religious doctrine. The detail explains how this view handles AI, animals, and moral status, while acknowledging difficulty in verifying souls empirically.`,
+  behaviorist: `Behaviorist restrictionism withholds consciousness attribution without robust behavioural flexibility. The elaboration nods to Skinnerian pragmatism, Turing-style tests, and critiques that behavior alone may be gamed or insufficient.`,
+  restrictive_phys: `Restrictive physicalism limits consciousness to specific physical organizations even if other substrates mimic behavior. The detail notes identity-theory motivations, neural correlates research, and challenges from hypothetical silicon brains.`,
+};
+
+for (const [id, detail] of Object.entries(questionDetails)) {
+  const node = nodes[id as NodeId];
+  if (node && node.kind === 'question') {
+    node.detail = detail;
+  }
+}
+
+for (const [id, detail] of Object.entries(endDetails)) {
+  const node = nodes[id as NodeId];
+  if (node && node.kind === 'end') {
+    node.detail = detail;
+  }
+}
 
 export const startId: NodeId = 'q0';
 

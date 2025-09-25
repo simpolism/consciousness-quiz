@@ -18,6 +18,9 @@ interface QuizElements {
   backBtn: HTMLButtonElement;
   restartBtn: HTMLButtonElement;
   result: HTMLElement;
+  introCard: HTMLDivElement;
+  startBtn: HTMLButtonElement;
+  actionsBar: HTMLDivElement;
 }
 
 const template = `
@@ -30,8 +33,13 @@ const template = `
   </header>
 
   <div class="container">
-    <div class="card" id="quiz">
-      <div class="card-actions">
+      <div class="card" id="quiz">
+      <div class="intro-card" id="introCard">
+        <h2>How to approach this quiz</h2>
+        <p>These prompts map philosophical stances about consciousness. There are no right answers—use your intuitions, and feel free to consult the “More context” dropdowns if a question feels vague. When ready, start the decision tree below.</p>
+        <button class="control-button control-button--choice" id="startQuizBtn">Begin the quiz</button>
+      </div>
+      <div class="card-actions" id="quizActions">
         <button class="card-action control-button control-button--ghost" id="backBtn" title="Go back one step">← Back</button>
         <button class="card-action control-button control-button--ghost" id="restartBtn" title="Restart the quiz">⟲ Restart</button>
       </div>
@@ -80,12 +88,16 @@ export class QuizApp {
       backBtn: this.getElement('#backBtn'),
       restartBtn: this.getElement('#restartBtn'),
       result: this.getElement('#result'),
+      introCard: this.getElement('#introCard'),
+      startBtn: this.getElement('#startQuizBtn'),
+      actionsBar: this.getElement('#quizActions'),
     };
 
     this.elements.yesBtn.addEventListener('click', () => this.onAnswer('yes'));
     this.elements.noBtn.addEventListener('click', () => this.onAnswer('no'));
     this.elements.backBtn.addEventListener('click', () => this.onBack());
     this.elements.restartBtn.addEventListener('click', () => this.restart());
+    this.elements.startBtn.addEventListener('click', () => this.startQuiz());
 
     [this.elements.yesBtn, this.elements.noBtn, this.elements.backBtn, this.elements.restartBtn].forEach(
       (btn) => {
@@ -94,6 +106,7 @@ export class QuizApp {
       },
     );
 
+    this.elements.actionsBar.hidden = true;
     this.renderNode();
   }
 
@@ -123,7 +136,12 @@ export class QuizApp {
   private restart(): void {
     this.state.current = startId;
     this.state.history = [];
-    this.renderNode();
+    this.elements.introCard.hidden = false;
+    this.elements.result.innerHTML = '';
+    this.elements.question.innerHTML = '';
+    this.setDecisionButtons({ visible: false, disabled: true });
+    this.elements.backBtn.hidden = true;
+    this.elements.actionsBar.hidden = true;
   }
 
   private go(choice: 'yes' | 'no', nextId: NodeId): void {
@@ -133,6 +151,13 @@ export class QuizApp {
   }
 
   private renderNode(): void {
+    if (!this.hasStarted()) {
+      this.elements.backBtn.hidden = true;
+      this.setDecisionButtons({ visible: false, disabled: true });
+      this.elements.actionsBar.hidden = true;
+      return;
+    }
+
     this.elements.result.innerHTML = '';
 
     let node: Node;
@@ -148,7 +173,7 @@ export class QuizApp {
 
     if (node.kind === 'end') {
       this.renderResult(node);
-      this.elements.question.textContent = 'Result';
+      this.elements.question.innerHTML = 'Result';
       this.elements.question.classList.add('question--label');
       this.setDecisionButtons({ visible: false, disabled: true });
       const noHistory = this.state.history.length === 0;
@@ -158,11 +183,27 @@ export class QuizApp {
     }
 
     this.elements.question.classList.remove('question--label');
-    this.elements.question.textContent = node.text;
+    const detail = node.detail ? `<details class="question-detail"><summary>More context</summary><p>${escapeHtml(node.detail)}</p></details>` : '';
+    this.elements.question.innerHTML = `<div class="question-text">${escapeHtml(node.text)}</div>${detail}`;
     this.setDecisionButtons({ visible: true, disabled: false });
     const noHistory = this.state.history.length === 0;
     this.elements.backBtn.disabled = noHistory;
     this.elements.backBtn.hidden = noHistory;
+    this.elements.actionsBar.hidden = false;
+  }
+
+  private hasStarted(): boolean {
+    return this.elements.introCard.hidden;
+  }
+
+  private startQuiz(): void {
+    this.elements.introCard.hidden = true;
+    this.state.current = startId;
+    this.state.history = [];
+    this.elements.backBtn.hidden = true;
+    this.setDecisionButtons({ visible: false, disabled: true });
+    this.elements.actionsBar.hidden = false;
+    this.renderNode();
   }
 
   private renderResult(node: Node): void {
@@ -184,8 +225,13 @@ export class QuizApp {
           : 'Humans not conscious';
 
     wrapper.innerHTML = `
-      <h2>${node.title} <span class="badge ${verdictClass}">${badgeLabel}</span></h2>
-      <div class="meta">${node.desc}</div>
+      <h2>${escapeHtml(node.title)} <span class="badge ${verdictClass}">${badgeLabel}</span></h2>
+      <div class="meta">${escapeHtml(node.desc)}</div>
+      ${
+        node.detail
+          ? `<details class="result-detail"><summary>Learn more about this stance</summary><p>${escapeHtml(node.detail)}</p></details>`
+          : ''
+      }
       ${
         node.references.length
           ? `<div class="thinkers">
@@ -194,7 +240,7 @@ export class QuizApp {
           ${node.references
             .map(
               (ref) =>
-                `<li><span class="thinker-name">${ref.thinker}</span> — <em>${ref.work}</em></li>`,
+                `<li><span class="thinker-name">${escapeHtml(ref.thinker)}</span> — <em>${escapeHtml(ref.work)}</em></li>`,
             )
             .join('')}
         </ul>

@@ -84,6 +84,7 @@ export interface QuestionNode extends BaseNode {
   text: string;
   yes: NodeId;
   no: NodeId;
+  detail?: string;
 }
 
 export interface Reference {
@@ -97,6 +98,7 @@ export interface EndNode extends BaseNode {
   title: string;
   desc: string;
   references: Reference[];
+  detail?: string;
 }
 
 export type Node = QuestionNode | EndNode;
