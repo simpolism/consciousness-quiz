@@ -108,6 +108,11 @@ function renderPage(): void {
           ${displayNodes.map(renderPositionCard).join('')}
         </div>
       </div>
+      <footer class="site-footer site-footer--light">
+        <a href="https://github.com/your-org/consciousness-quiz" target="_blank" rel="noopener">
+          View on GitHub →
+        </a>
+      </footer>
     `;
 
     const selectElement = document.getElementById('verdict-filter') as HTMLSelectElement;

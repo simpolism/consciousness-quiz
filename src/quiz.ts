@@ -50,6 +50,12 @@ const template = `
       <div id="result"></div>
     </div>
   </div>
+
+  <footer class="site-footer">
+    <a href="https://github.com/your-org/consciousness-quiz" target="_blank" rel="noopener">
+      View on GitHub →
+    </a>
+  </footer>
 `;
 
 export class QuizApp {

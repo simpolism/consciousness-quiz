@@ -198,6 +198,32 @@ button:disabled {
   color: var(--muted);
 }
 
+.site-footer {
+  text-align: center;
+  margin: 32px 0 48px;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.site-footer a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+.site-footer a:hover {
+  color: var(--accent-2);
+  text-decoration: underline;
+}
+.site-footer--light {
+  color: #475569;
+}
+.site-footer--light a {
+  color: #4f46e5;
+}
+.site-footer--light a:hover {
+  color: #312e81;
+}
+
 .footer-controls {
   display: flex;
   gap: 10px;
