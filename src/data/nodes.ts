@@ -1,4 +1,13 @@
-import { EndNode, Node, NodeId, NodeMap, QuestionNode, Reference, Verdict } from '../types';
+import {
+  EndNode,
+  Node,
+  NodeId,
+  NodeMap,
+  QuestionNode,
+  QuestionOption,
+  Reference,
+  Verdict,
+} from '../types';
 
 type EndParams = [NodeId, Verdict, string, string, Reference[]?, string?];
 
@@ -12,12 +21,22 @@ const makeEnd = (...[id, verdict, title, desc, references = [], detail]: EndPara
   ...(detail ? { detail } : {}),
 });
 
-const makeQuestion = (id: NodeId, text: string, yes: NodeId, no: NodeId, detail?: string): QuestionNode => ({
+const makeQuestion = (
+  id: NodeId,
+  text: string,
+  yes: NodeId,
+  no: NodeId,
+  detail?: string,
+  extraOptions: QuestionOption[] = [],
+): QuestionNode => ({
   kind: 'question',
   id,
   text,
-  yes,
-  no,
+  options: [
+    { id: 'yes', label: 'Yes', target: yes, tone: 'affirmative' },
+    { id: 'no', label: 'No', target: no, tone: 'negative' },
+    ...extraOptions,
+  ],
   ...(detail ? { detail } : {}),
 });
 
@@ -27,6 +46,15 @@ export const nodes: NodeMap = {
     `Do you think humans could ever fully explain consciousness, even with future science?`,
     'q1',
     'mysterian',
+    undefined,
+    [
+      {
+        id: 'unsure',
+        label: 'Not Sure',
+        target: 'q1',
+        tone: 'neutral',
+      },
+    ],
   ),
 
   mysterian: makeEnd(
@@ -944,7 +972,7 @@ export const nodes: NodeMap = {
 };
 
 const questionDetails: Partial<Record<NodeId, string>> = {
-  q0: `This opener tests whether you believe the hard problem of consciousness is a solvable research frontier or a principled mystery. A "Yes" signals confidence that scientific or computational theories can eventually bridge experience and mechanism; a "No" leans toward epistemic limits or unknowable qualia.`,
+  q0: `This opener tests whether you believe the hard problem of consciousness is a solvable research frontier or a principled mystery. A "Yes" signals confidence that scientific or computational theories can eventually bridge experience and mechanism; a "No" leans toward epistemic limits or unknowable qualia. Choose “Not sure yet” if you want to keep exploring positions before committing.`,
   q1: `Here you assess whether the subject of the quiz has its own point of view, not just behavior. Think about signs of subjective access—reports, self-monitoring, surprise at stimuli—and whether those observations justify attributing felt experience.`,
   q2: `Even if a system reports an inner life, you must judge whether that sense is genuine or confabulated. Many theories argue that self-modeling or language can fake awareness, so this is a gut check on your tolerance for narrative self-presentation.`,
   q6: `Answering this pushes you to apply your standard consistently: if you dismiss another entity's experience as an illusion, would you also dismiss your own? Philosophers use this move to expose double standards about introspective certainty.`,

@@ -79,11 +79,19 @@ export interface BaseNode {
   kind: 'question' | 'end';
 }
 
+export type QuestionOptionTone = 'affirmative' | 'negative' | 'neutral';
+
+export interface QuestionOption {
+  id: string;
+  label: string;
+  target: NodeId;
+  tone?: QuestionOptionTone;
+}
+
 export interface QuestionNode extends BaseNode {
   kind: 'question';
   text: string;
-  yes: NodeId;
-  no: NodeId;
+  options: QuestionOption[];
   detail?: string;
 }
 

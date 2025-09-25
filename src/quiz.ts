@@ -1,9 +1,11 @@
 import { nodes, startId, getNode } from './data/nodes';
-import type { Node, NodeId } from './types';
+import type { Node, NodeId, QuestionNode, QuestionOption, QuestionOptionTone } from './types';
 
 interface HistoryEntry {
-  id: NodeId;
-  answer: 'yes' | 'no';
+  nodeId: NodeId;
+  optionId: string;
+  optionLabel: string;
+  optionTone?: QuestionOptionTone;
 }
 
 interface QuizState {
@@ -13,8 +15,7 @@ interface QuizState {
 
 interface QuizElements {
   question: HTMLElement;
-  yesBtn: HTMLButtonElement;
-  noBtn: HTMLButtonElement;
+  controls: HTMLDivElement;
   backBtn: HTMLButtonElement;
   restartBtn: HTMLButtonElement;
   result: HTMLElement;
@@ -44,10 +45,7 @@ const template = `
         <button class="card-action control-button control-button--ghost" id="restartBtn" title="Restart the quiz">⟲ Restart</button>
       </div>
       <div id="question" class="question"></div>
-      <div class="controls">
-        <button class="control-button control-button--choice yes" id="yesBtn">Yes</button>
-        <button class="control-button control-button--choice control-button--danger no" id="noBtn">No</button>
-      </div>
+      <div class="controls" id="choiceControls"></div>
       <div id="result"></div>
     </div>
 
@@ -83,8 +81,7 @@ export class QuizApp {
     this.root.innerHTML = template;
     this.elements = {
       question: this.getElement('#question'),
-      yesBtn: this.getElement('#yesBtn'),
-      noBtn: this.getElement('#noBtn'),
+      controls: this.getElement('#choiceControls'),
       backBtn: this.getElement('#backBtn'),
       restartBtn: this.getElement('#restartBtn'),
       result: this.getElement('#result'),
@@ -93,31 +90,17 @@ export class QuizApp {
       actionsBar: this.getElement('#quizActions'),
     };
 
-    this.elements.yesBtn.addEventListener('click', () => this.onAnswer('yes'));
-    this.elements.noBtn.addEventListener('click', () => this.onAnswer('no'));
     this.elements.backBtn.addEventListener('click', () => this.onBack());
     this.elements.restartBtn.addEventListener('click', () => this.restart());
     this.elements.startBtn.addEventListener('click', () => this.startQuiz());
 
-    [this.elements.yesBtn, this.elements.noBtn, this.elements.backBtn, this.elements.restartBtn].forEach(
-      (btn) => {
-        btn.addEventListener('pointerup', () => btn.blur());
-        btn.addEventListener('pointerleave', () => btn.blur());
-      },
-    );
+    [this.elements.backBtn, this.elements.restartBtn, this.elements.startBtn].forEach((btn) => {
+      btn.addEventListener('pointerup', () => btn.blur());
+      btn.addEventListener('pointerleave', () => btn.blur());
+    });
 
     this.elements.actionsBar.hidden = true;
     this.renderNode();
-  }
-
-  private onAnswer(choice: 'yes' | 'no'): void {
-    const node = getNode(this.state.current);
-    if (node.kind === 'end') {
-      return;
-    }
-
-    const nextId = node[choice];
-    this.go(choice, nextId);
   }
 
   private onBack(): void {
@@ -129,7 +112,7 @@ export class QuizApp {
     if (!previous) {
       return;
     }
-    this.state.current = previous.id;
+    this.state.current = previous.nodeId;
     this.renderNode();
   }
 
@@ -139,33 +122,39 @@ export class QuizApp {
     this.elements.introCard.hidden = false;
     this.elements.result.innerHTML = '';
     this.elements.question.innerHTML = '';
-    this.setDecisionButtons({ visible: false, disabled: true });
+    this.setOptionControls({ visible: false, disabled: true });
     this.elements.backBtn.hidden = true;
     this.elements.actionsBar.hidden = true;
   }
 
-  private go(choice: 'yes' | 'no', nextId: NodeId): void {
-    this.state.history.push({ id: this.state.current, answer: choice });
-    this.state.current = nextId;
+  private go(option: QuestionOption): void {
+    this.state.history.push({
+      nodeId: this.state.current,
+      optionId: option.id,
+      optionLabel: option.label,
+      optionTone: option.tone,
+    });
+    this.state.current = option.target;
     this.renderNode();
   }
 
   private renderNode(): void {
     if (!this.hasStarted()) {
       this.elements.backBtn.hidden = true;
-      this.setDecisionButtons({ visible: false, disabled: true });
+      this.setOptionControls({ visible: false, disabled: true });
       this.elements.actionsBar.hidden = true;
       return;
     }
 
     this.elements.result.innerHTML = '';
+    this.elements.controls.innerHTML = '';
 
     let node: Node;
     try {
       node = getNode(this.state.current);
     } catch (error) {
       this.elements.question.textContent = 'Error: missing node.';
-      this.setDecisionButtons({ visible: true, disabled: true });
+      this.setOptionControls({ visible: true, disabled: true });
       this.elements.backBtn.disabled = true;
       this.elements.backBtn.hidden = this.state.history.length === 0;
       return;
@@ -175,21 +164,52 @@ export class QuizApp {
       this.renderResult(node);
       this.elements.question.innerHTML = 'Result';
       this.elements.question.classList.add('question--label');
-      this.setDecisionButtons({ visible: false, disabled: true });
+      this.setOptionControls({ visible: false, disabled: true });
       const noHistory = this.state.history.length === 0;
       this.elements.backBtn.disabled = noHistory;
       this.elements.backBtn.hidden = noHistory;
       return;
     }
 
+    this.renderOptions(node);
     this.elements.question.classList.remove('question--label');
     const detail = node.detail ? `<details class="question-detail"><summary>More context</summary><p>${escapeHtml(node.detail)}</p></details>` : '';
     this.elements.question.innerHTML = `<div class="question-text">${escapeHtml(node.text)}</div>${detail}`;
-    this.setDecisionButtons({ visible: true, disabled: false });
+    this.setOptionControls({ visible: true, disabled: false });
     const noHistory = this.state.history.length === 0;
     this.elements.backBtn.disabled = noHistory;
     this.elements.backBtn.hidden = noHistory;
     this.elements.actionsBar.hidden = false;
+  }
+
+  private renderOptions(node: QuestionNode): void {
+    this.elements.controls.innerHTML = '';
+    node.options.forEach((option) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = this.getOptionButtonClass(option);
+      button.textContent = option.label;
+      button.addEventListener('click', () => this.go(option));
+      button.addEventListener('pointerup', () => button.blur());
+      button.addEventListener('pointerleave', () => button.blur());
+      this.elements.controls.appendChild(button);
+    });
+  }
+
+  private getOptionButtonClass(option: QuestionOption): string {
+    const classes = ['control-button'];
+    switch (option.tone) {
+      case 'affirmative':
+        classes.push('control-button--choice');
+        break;
+      case 'negative':
+        classes.push('control-button--choice', 'control-button--danger');
+        break;
+      default:
+        classes.push('control-button--ghost');
+        break;
+    }
+    return classes.join(' ');
   }
 
   private hasStarted(): boolean {
@@ -201,7 +221,7 @@ export class QuizApp {
     this.state.current = startId;
     this.state.history = [];
     this.elements.backBtn.hidden = true;
-    this.setDecisionButtons({ visible: false, disabled: true });
+    this.setOptionControls({ visible: false, disabled: true });
     this.elements.actionsBar.hidden = false;
     this.renderNode();
   }
@@ -211,6 +231,7 @@ export class QuizApp {
       return;
     }
 
+    this.elements.controls.innerHTML = '';
     const wrapper = document.createElement('div');
     const verdictClass =
       node.verdict === 'conscious' ? 'good' : node.verdict === 'not' ? 'bad' : 'mindblown';
@@ -283,12 +304,12 @@ export class QuizApp {
     }
   }
 
-  private setDecisionButtons({ visible, disabled }: { visible: boolean; disabled: boolean }): void {
-    const display = visible ? 'inline-flex' : 'none';
-    this.elements.yesBtn.style.display = display;
-    this.elements.noBtn.style.display = display;
-    this.elements.yesBtn.disabled = disabled;
-    this.elements.noBtn.disabled = disabled;
+  private setOptionControls({ visible, disabled }: { visible: boolean; disabled: boolean }): void {
+    this.elements.controls.style.display = visible ? '' : 'none';
+    const buttons = Array.from(this.elements.controls.querySelectorAll<HTMLButtonElement>('button'));
+    buttons.forEach((button) => {
+      button.disabled = disabled;
+    });
   }
 
   private getElement<T extends HTMLElement>(selector: string): T {
@@ -299,15 +320,26 @@ export class QuizApp {
     return el;
   }
 
+  private getResultAnswerClass(tone?: QuestionOptionTone): string {
+    switch (tone) {
+      case 'negative':
+        return 'result-path-answer--negative';
+      case 'neutral':
+        return 'result-path-answer--neutral';
+      default:
+        return 'result-path-answer--affirmative';
+    }
+  }
+
   private buildPathMarkup(): string {
     const steps = this.state.history
       .map((entry, index) => {
-        const questionNode = nodes[entry.id];
+        const questionNode = nodes[entry.nodeId];
         if (!questionNode || questionNode.kind === 'end') {
           return null;
         }
-        const answerClass = entry.answer === 'yes' ? 'result-path-answer--yes' : 'result-path-answer--no';
-        const answerLabel = entry.answer === 'yes' ? 'Yes' : 'No';
+        const answerClass = this.getResultAnswerClass(entry.optionTone);
+        const answerLabel = escapeHtml(entry.optionLabel);
         const questionText = escapeHtml(questionNode.text);
         return `
           <li class="result-path-item">

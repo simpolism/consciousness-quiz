@@ -372,13 +372,17 @@ button:disabled {
   padding: 4px 10px;
   color: #0b1a2a;
 }
-.result-path-answer--yes {
+.result-path-answer--affirmative {
   background: rgba(144, 227, 154, 0.85);
   color: #03381b;
 }
-.result-path-answer--no {
+.result-path-answer--negative {
   background: rgba(255, 154, 162, 0.85);
   color: #511016;
+}
+.result-path-answer--neutral {
+  background: rgba(148, 172, 209, 0.65);
+  color: #0c223c;
 }
 .result-path-answer--result {
   background: rgba(115, 193, 255, 0.85);
