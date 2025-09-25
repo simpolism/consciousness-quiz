@@ -28,7 +28,7 @@ interface QuizElements {
 const template = `
   <header>
     <h1>Is It Conscious?</h1>
-    <p>A quiz to figure out where you stand in the consciousness debate.</p>
+    <p>Figure out where you stand in the consciousness debate.</p>
   </header>
 
   <div class="container">
