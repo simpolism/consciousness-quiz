@@ -39,6 +39,15 @@ function getVerdictColor(verdict: Verdict): string {
   }
 }
 
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 function renderPositionCard(node: EndNode): string {
   const referencesHtml =
     node.references.length > 0
@@ -74,9 +83,25 @@ function renderPage(): void {
   }
 
   let selectedVerdict: Verdict | 'all' = 'all';
+  let searchTerm = '';
 
   function updateDisplay() {
-    const displayNodes = selectedVerdict === 'all' ? endNodes : groupedNodes[selectedVerdict] || [];
+    const activeElement = document.activeElement as HTMLElement | null;
+    const wasSearchFocused =
+      activeElement instanceof HTMLInputElement && activeElement.id === 'positions-search-input';
+    const selectionStart = wasSearchFocused ? activeElement.selectionStart ?? activeElement.value.length : null;
+    const selectionEnd = wasSearchFocused ? activeElement.selectionEnd ?? activeElement.value.length : null;
+
+    const filteredByVerdict = selectedVerdict === 'all' ? endNodes : groupedNodes[selectedVerdict] || [];
+    const normalizedSearch = searchTerm.trim().toLowerCase();
+    const displayNodes = normalizedSearch
+      ? filteredByVerdict.filter((node) => {
+          const haystack = [node.title, node.desc, ...node.references.map((ref) => `${ref.thinker} ${ref.work}`)]
+            .join(' ')
+            .toLowerCase();
+          return haystack.includes(normalizedSearch);
+        })
+      : filteredByVerdict;
 
     app.innerHTML = `
       <div class="positions-layout">
@@ -104,6 +129,16 @@ function renderPage(): void {
           </select>
         </div>
 
+        <div class="positions-search">
+          <label for="positions-search-input">Search positions</label>
+          <input
+            type="search"
+            id="positions-search-input"
+            placeholder="Search by title, thinker, or keyword"
+            value="${escapeHtml(searchTerm)}"
+          />
+        </div>
+
         <div class="positions-grid">
           ${displayNodes.map(renderPositionCard).join('')}
         </div>
@@ -120,6 +155,23 @@ function renderPage(): void {
       selectedVerdict = (e.target as HTMLSelectElement).value as Verdict | 'all';
       updateDisplay();
     });
+
+    const searchInput = document.getElementById('positions-search-input') as HTMLInputElement;
+    searchInput?.addEventListener('input', (event) => {
+      searchTerm = (event.target as HTMLInputElement).value;
+      updateDisplay();
+    });
+
+    if (searchInput && wasSearchFocused) {
+      searchInput.focus({ preventScroll: true });
+      const start = selectionStart ?? searchInput.value.length;
+      const end = selectionEnd ?? searchInput.value.length;
+      try {
+        searchInput.setSelectionRange(start, end);
+      } catch {
+        // setSelectionRange can fail on some inputs; ignore and keep focus
+      }
+    }
   }
 
   updateDisplay();

@@ -1,9 +1,14 @@
 import { nodes, startId, getNode } from './data/nodes';
 import type { Node, NodeId } from './types';
 
+interface HistoryEntry {
+  id: NodeId;
+  answer: 'yes' | 'no';
+}
+
 interface QuizState {
   current: NodeId;
-  history: NodeId[];
+  history: HistoryEntry[];
 }
 
 interface QuizElements {
@@ -12,12 +17,8 @@ interface QuizElements {
   noBtn: HTMLButtonElement;
   backBtn: HTMLButtonElement;
   restartBtn: HTMLButtonElement;
-  path: HTMLElement;
   result: HTMLElement;
 }
-
-const trimText = (text: string, max = 48): string =>
-  text.length > max ? `${text.slice(0, max - 3)}…` : text;
 
 const template = `
   <header>
@@ -29,26 +30,15 @@ const template = `
   </header>
 
   <div class="container">
-    <div class="legend-bar" id="legend">
-      <div class="legend-row">
-        <span class="legend-label">Legend:</span>
-        <div class="legend-pills">
-          <span class="pill">✅ Conscious</span>
-          <span class="pill">❌ Not Conscious</span>
-          <span class="pill">🤯 Humans not conscious (meta-skeptic)</span>
-        </div>
-      </div>
-      <div class="legend-note small">This quiz is a pedagogical map, not medical or legal advice. It condenses viewpoints from philosophy, cognitive science, and neuroscience.</div>
-    </div>
-
     <div class="card" id="quiz">
-      <div id="path" class="path" aria-live="polite"></div>
+      <div class="card-actions">
+        <button class="card-action control-button control-button--ghost" id="backBtn" title="Go back one step">← Back</button>
+        <button class="card-action control-button control-button--ghost" id="restartBtn" title="Restart the quiz">⟲ Restart</button>
+      </div>
       <div id="question" class="question"></div>
       <div class="controls">
-        <button class="yes" id="yesBtn">Yes</button>
-        <button class="no" id="noBtn">No</button>
-        <button class="aux" id="backBtn" title="Go back one step">← Back</button>
-        <button class="aux" id="restartBtn" title="Restart the quiz">⟲ Restart</button>
+        <button class="control-button control-button--choice yes" id="yesBtn">Yes</button>
+        <button class="control-button control-button--choice control-button--danger no" id="noBtn">No</button>
       </div>
       <div id="result"></div>
     </div>
@@ -60,6 +50,14 @@ const template = `
     </footer>
   </div>
 `;
+
+const escapeHtml = (value: string): string =>
+  value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 
 export class QuizApp {
   private readonly root: HTMLElement;
@@ -81,7 +79,6 @@ export class QuizApp {
       noBtn: this.getElement('#noBtn'),
       backBtn: this.getElement('#backBtn'),
       restartBtn: this.getElement('#restartBtn'),
-      path: this.getElement('#path'),
       result: this.getElement('#result'),
     };
 
@@ -89,6 +86,13 @@ export class QuizApp {
     this.elements.noBtn.addEventListener('click', () => this.onAnswer('no'));
     this.elements.backBtn.addEventListener('click', () => this.onBack());
     this.elements.restartBtn.addEventListener('click', () => this.restart());
+
+    [this.elements.yesBtn, this.elements.noBtn, this.elements.backBtn, this.elements.restartBtn].forEach(
+      (btn) => {
+        btn.addEventListener('pointerup', () => btn.blur());
+        btn.addEventListener('pointerleave', () => btn.blur());
+      },
+    );
 
     this.renderNode();
   }
@@ -100,7 +104,7 @@ export class QuizApp {
     }
 
     const nextId = node[choice];
-    this.go(nextId);
+    this.go(choice, nextId);
   }
 
   private onBack(): void {
@@ -108,7 +112,11 @@ export class QuizApp {
       return;
     }
 
-    this.state.current = this.state.history.pop()!;
+    const previous = this.state.history.pop();
+    if (!previous) {
+      return;
+    }
+    this.state.current = previous.id;
     this.renderNode();
   }
 
@@ -118,14 +126,13 @@ export class QuizApp {
     this.renderNode();
   }
 
-  private go(nextId: NodeId): void {
-    this.state.history.push(this.state.current);
+  private go(choice: 'yes' | 'no', nextId: NodeId): void {
+    this.state.history.push({ id: this.state.current, answer: choice });
     this.state.current = nextId;
     this.renderNode();
   }
 
   private renderNode(): void {
-    this.renderPath();
     this.elements.result.innerHTML = '';
 
     let node: Node;
@@ -135,20 +142,27 @@ export class QuizApp {
       this.elements.question.textContent = 'Error: missing node.';
       this.setDecisionButtons({ visible: true, disabled: true });
       this.elements.backBtn.disabled = true;
+      this.elements.backBtn.hidden = this.state.history.length === 0;
       return;
     }
 
     if (node.kind === 'end') {
       this.renderResult(node);
       this.elements.question.textContent = 'Result';
+      this.elements.question.classList.add('question--label');
       this.setDecisionButtons({ visible: false, disabled: true });
-      this.elements.backBtn.disabled = this.state.history.length === 0;
+      const noHistory = this.state.history.length === 0;
+      this.elements.backBtn.disabled = noHistory;
+      this.elements.backBtn.hidden = noHistory;
       return;
     }
 
+    this.elements.question.classList.remove('question--label');
     this.elements.question.textContent = node.text;
     this.setDecisionButtons({ visible: true, disabled: false });
-    this.elements.backBtn.disabled = this.state.history.length === 0;
+    const noHistory = this.state.history.length === 0;
+    this.elements.backBtn.disabled = noHistory;
+    this.elements.backBtn.hidden = noHistory;
   }
 
   private renderResult(node: Node): void {
@@ -188,55 +202,43 @@ export class QuizApp {
           : ''
       }
       <div class="footer-controls">
-        <button class="aux" id="viewPathBtn">View full path</button>
-        <button class="aux" id="restartBtn2">⟲ Restart</button>
+        <button class="control-button control-button--ghost" id="viewPathBtn" aria-expanded="false">View full path</button>
       </div>
+      <div class="result-path" id="resultPath" hidden></div>
     `;
 
     this.elements.result.appendChild(wrapper);
 
     const viewPathBtn = wrapper.querySelector<HTMLButtonElement>('#viewPathBtn');
-    const restartBtn2 = wrapper.querySelector<HTMLButtonElement>('#restartBtn2');
+    const pathContainer = wrapper.querySelector<HTMLDivElement>('#resultPath');
 
     if (viewPathBtn) {
       viewPathBtn.addEventListener('click', () => {
-        const message = this.state.history
-          .map((id, index) => {
-            const historyNode = nodes[id];
-            const label = historyNode.kind === 'end' ? historyNode.title : historyNode.text;
-            return `${index + 1}. ${label}`;
-          })
-          .join('\n');
+        if (!pathContainer) {
+          return;
+        }
 
-        alert(message);
+        const isVisible = pathContainer.hasAttribute('data-open');
+        if (isVisible) {
+          pathContainer.removeAttribute('data-open');
+          pathContainer.hidden = true;
+          pathContainer.innerHTML = '';
+          viewPathBtn.textContent = 'View full path';
+          viewPathBtn.setAttribute('aria-expanded', 'false');
+          return;
+        }
+
+        pathContainer.innerHTML = this.buildPathMarkup();
+        pathContainer.setAttribute('data-open', 'true');
+        pathContainer.hidden = false;
+        viewPathBtn.textContent = 'Hide path';
+        viewPathBtn.setAttribute('aria-expanded', 'true');
       });
     }
-
-    if (restartBtn2) {
-      restartBtn2.addEventListener('click', () => this.restart());
-    }
-  }
-
-  private renderPath(): void {
-    this.elements.path.innerHTML = '';
-    this.state.history.forEach((id, index) => {
-      const node = nodes[id];
-      if (!node) {
-        return;
-      }
-      const pill = document.createElement('span');
-      pill.className = 'pill';
-      if (node.kind === 'end') {
-        pill.textContent = `${index + 1} · ${node.title}`;
-      } else {
-        pill.textContent = `${index + 1} · ${trimText(node.text)}`;
-      }
-      this.elements.path.appendChild(pill);
-    });
   }
 
   private setDecisionButtons({ visible, disabled }: { visible: boolean; disabled: boolean }): void {
-    const display = visible ? '' : 'none';
+    const display = visible ? 'inline-flex' : 'none';
     this.elements.yesBtn.style.display = display;
     this.elements.noBtn.style.display = display;
     this.elements.yesBtn.disabled = disabled;
@@ -249,5 +251,47 @@ export class QuizApp {
       throw new Error(`Missing element for selector: ${selector}`);
     }
     return el;
+  }
+
+  private buildPathMarkup(): string {
+    const steps = this.state.history
+      .map((entry, index) => {
+        const questionNode = nodes[entry.id];
+        if (!questionNode || questionNode.kind === 'end') {
+          return null;
+        }
+        const answerClass = entry.answer === 'yes' ? 'result-path-answer--yes' : 'result-path-answer--no';
+        const answerLabel = entry.answer === 'yes' ? 'Yes' : 'No';
+        const questionText = escapeHtml(questionNode.text);
+        return `
+          <li class="result-path-item">
+            <span class="result-path-step">${index + 1}</span>
+            <div class="result-path-copy">
+              <span class="result-path-question">${questionText}</span>
+              <span class="result-path-answer ${answerClass}">${answerLabel}</span>
+            </div>
+          </li>
+        `;
+      })
+      .filter((item): item is string => item !== null);
+
+    const currentNode = getNode(this.state.current);
+    if (currentNode.kind === 'end') {
+      steps.push(`
+        <li class="result-path-item result-path-end">
+          <span class="result-path-step">${steps.length + 1}</span>
+          <div class="result-path-copy">
+            <span class="result-path-question">Result</span>
+            <span class="result-path-answer result-path-answer--result">${escapeHtml(currentNode.title)}</span>
+          </div>
+        </li>
+      `);
+    }
+
+    if (steps.length === 0) {
+      return '<p class="result-path-empty">No path history recorded.</p>';
+    }
+
+    return `<ol class="result-path-list">${steps.join('')}</ol>`;
   }
 }
