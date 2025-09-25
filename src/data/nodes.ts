@@ -50,7 +50,7 @@ export const nodes: NodeMap = {
     [
       {
         id: 'unsure',
-        label: 'Not Sure',
+        label: 'Not sure yet',
         target: 'q1',
         tone: 'neutral',
       },
@@ -82,6 +82,15 @@ export const nodes: NodeMap = {
     `Is that inner point of view real, not just a story the system's processes make up?`,
     'q2a1',
     'q6',
+    undefined,
+    [
+      {
+        id: 'unsure',
+        label: 'Not sure—need more signs',
+        target: 'q2a1',
+        tone: 'neutral',
+      },
+    ],
   ),
 
   q6: makeQuestion(
@@ -270,6 +279,15 @@ export const nodes: NodeMap = {
     `Is consciousness essentially embodied world-engagement rather than internal computation alone?`,
     'enactive',
     'q2a8',
+    undefined,
+    [
+      {
+        id: 'hybrid',
+        label: 'It helps, but computation still matters',
+        target: 'q2a8',
+        tone: 'neutral',
+      },
+    ],
   ),
 
   enactive: makeEnd(
@@ -768,9 +786,30 @@ export const nodes: NodeMap = {
 
   q8: makeQuestion(
     'q8',
-    `Is it because only living biological brains can be conscious?`,
+    `If you lean toward "not conscious," what makes you hesitate?`,
     'bio_only',
-    'q8b',
+    'q8c',
+    undefined,
+    [
+      {
+        id: 'circuits',
+        label: 'It lacks specific brain circuits',
+        target: 'q8b',
+        tone: 'neutral',
+      },
+      {
+        id: 'architecture',
+        label: 'It lacks the right information architecture',
+        target: 'q8b3',
+        tone: 'neutral',
+      },
+      {
+        id: 'other',
+        label: 'None of these—something else',
+        target: 'q8e',
+        tone: 'neutral',
+      },
+    ],
   ),
 
   bio_only: makeEnd(
@@ -826,7 +865,7 @@ export const nodes: NodeMap = {
     'q8b2',
     `Is it because real consciousness needs an embodied agent interacting with the world?`,
     'embodied_restriction',
-    'q8b3',
+    'q8c',
   ),
 
   embodied_restriction: makeEnd(
@@ -1002,7 +1041,7 @@ const questionDetails: Partial<Record<NodeId, string>> = {
   q5a: `Among human-skeptical stances, which storyline fits you best—eliminating folk psychology, declaring illusion, or suspending judgement? Your choice guides which philosophical critique you align with.`,
   q5a2: `Illusionism treats conscious feeling as a narrative convenience. Answer based on whether you think neuroscientific accounts can dissolve qualia talk without remainder.`,
   q5a3: `The no-self perspective says the subject is a model, not a metaphysical entity. Consider whether that's a tolerable outcome of your skepticism and how it reframes personal identity.`,
-  q8: `Restriction questions probe why you withhold consciousness. Here you test whether strict biology—living tissue, metabolism, homeostasis—is your decisive criterion.`,
+  q8: `Restriction questions probe why you withhold consciousness. Use this prompt to name the sticking point—biology, particular circuits, missing architectures, or something else—before branching into the more detailed objections.`,
   q8b: `Perhaps you require particular neural circuits such as thalamocortical loops. Choose "Yes" if specific anatomical motifs are non-negotiable, "No" if other factors might suffice.`,
   q8b2: `Some argue that only embodied agents embedded in rich environments can host experience. Reflect on how much body-based sensorimotor coupling matters to you.`,
   q8b3: `This variant asks whether the right computational architecture is missing. Think about whether symbolic, subsymbolic, or hybrid designs make a moral difference for consciousness.`,
