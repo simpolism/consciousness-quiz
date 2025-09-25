@@ -171,7 +171,8 @@ export const nodes: NodeMap = {
 
   enactive: makeEnd(
     'enactive',
-    'conscious',    'Embodied / Enactive Cognition',
+    'conscious',
+    'Embodied / Enactive Cognition',
     `Mind is enacted in organism–environment dynamics; experience depends on embodied skills and context.`,
     ['Francisco Varela', 'Evan Thompson', 'Alva Noë', 'Maurice Merleau-Ponty', 'Martin Heidegger'],
   ),
@@ -201,7 +202,8 @@ export const nodes: NodeMap = {
   neutral_monism: makeEnd(
     'neutral_monism',
     'conscious',
-    'Russellian / Neutral Monism',    `Matter has built-in qualitative grounds for consciousness — neither strictly mental nor purely physical.`,
+    'Russellian / Neutral Monism',
+    `Matter has built-in qualitative grounds for consciousness — neither strictly mental nor purely physical.`,
     ['Bertrand Russell', 'David Chalmers (Russellian monism)', 'Sam Coleman'],
   ),
 
@@ -231,7 +233,8 @@ export const nodes: NodeMap = {
     'ideal',
     'conscious',
     'Idealism / Cosmopsychism',
-    `Consciousness is fundamental and universal; individual minds are aspects or partitions of a larger mind.`,    ['George Berkeley', 'Bernardo Kastrup', 'G.W.F. Hegel'],
+    `Consciousness is fundamental and universal; individual minds are aspects or partitions of a larger mind.`,
+    ['George Berkeley', 'Bernardo Kastrup', 'G.W.F. Hegel'],
   ),
 
   q2a10: makeQuestion(
@@ -261,7 +264,8 @@ export const nodes: NodeMap = {
     'conscious',
     'Property Dualism',
     `Mental properties are irreducible to physical properties, though they may arise from physical substance.`,
-    ['David Chalmers (naturalistic dualism)', 'Frank Jackson', 'Tim Crane'],  ),
+    ['David Chalmers (naturalistic dualism)', 'Frank Jackson', 'Tim Crane'],
+  ),
 
   q2a10b: makeQuestion(
     'q2a10b',
@@ -322,7 +326,8 @@ export const nodes: NodeMap = {
     ['Edmund Husserl', 'Thomas Nagel', 'David Chalmers'],
   ),
 
-  q2a12a: makeQuestion(    'q2a12a',
+  q2a12a: makeQuestion(
+    'q2a12a',
     `If a system acts with human-like flexible intelligence, is that enough?`,
     'functionalist',
     'q2a12b',
@@ -352,7 +357,8 @@ export const nodes: NodeMap = {
   ),
 
   q2a12c: makeQuestion(
-    'q2a12c',    `Does consciousness emerge from complex organization beyond what we can reduce to behavior?`,
+    'q2a12c',
+    `Does consciousness emerge from complex organization beyond what we can reduce to behavior?`,
     'emergent_physicalism',
     'q2a13',
   ),
@@ -362,7 +368,7 @@ export const nodes: NodeMap = {
     'conscious',
     'Emergent Physicalism',
     `Consciousness strongly emerges from highly organized physical systems, beyond what behavior or micro-physics alone can explain.`,
-    ['C.D. Broad', 'Timothy O\'Connor', 'Roger Sperry'],
+    ['C.D. Broad', "Timothy O'Connor", 'Roger Sperry'],
   ),
 
   q2a13: makeQuestion(
@@ -382,7 +388,8 @@ export const nodes: NodeMap = {
 
   q2a13a: makeQuestion(
     'q2a13a',
-    `Are there other information-theoretic approaches besides IIT that explain consciousness?`,    'information_closure',
+    `Are there other information-theoretic approaches besides IIT that explain consciousness?`,
+    'information_closure',
     'phenom',
   ),
 
@@ -413,7 +420,8 @@ export const nodes: NodeMap = {
     'meta',
     'Eliminativism',
     `Our common-sense mental categories (like "qualia") are errors; the right neuroscience will replace them.`,
-    ['Patricia Churchland', 'Paul Churchland'],  ),
+    ['Patricia Churchland', 'Paul Churchland'],
+  ),
 
   q5a2: makeQuestion(
     'q5a2',
@@ -444,7 +452,8 @@ export const nodes: NodeMap = {
     'q8b',
   ),
 
-  bio_only: makeEnd(    'bio_only',
+  bio_only: makeEnd(
+    'bio_only',
     'not',
     'Biological Naturalism (restriction)',
     `Only living brains generate consciousness; this object lacks the requisite biology.`,
@@ -475,7 +484,8 @@ export const nodes: NodeMap = {
 
   embodied_restriction: makeEnd(
     'embodied_restriction',
-    'not',    'Embodiment Restriction',
+    'not',
+    'Embodiment Restriction',
     `Genuine consciousness requires lived embodiment and rich world engagement the target lacks.`,
     ['Hubert Dreyfus', 'Evan Thompson', 'Maurice Merleau-Ponty'],
   ),
@@ -506,7 +516,8 @@ export const nodes: NodeMap = {
     'quantum',
     'not',
     'Orchestrated Objective Reduction (Orch-OR)',
-    `Consciousness arises from quantum processes in brain microtubules not present in the target.`,    ['Roger Penrose', 'Stuart Hameroff'],
+    `Consciousness arises from quantum processes in brain microtubules not present in the target.`,
+    ['Roger Penrose', 'Stuart Hameroff'],
   ),
 
   q8d: makeQuestion(

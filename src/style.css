@@ -210,6 +210,153 @@ details summary {
   font-weight: 600;
 }
 
+.positions-layout {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px 48px;
+  color: #1f2937;
+}
+
+.positions-title {
+  margin: 0 0 16px;
+  text-align: center;
+  color: #0f172a;
+  font-size: 2.25rem;
+}
+
+.positions-nav {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.positions-link {
+  color: #6366f1;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.positions-link:hover {
+  color: #4338ca;
+  text-decoration: underline;
+}
+
+.positions-filter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 32px;
+  color: #1f2937;
+}
+
+.positions-filter-label {
+  font-weight: 600;
+}
+
+.positions-select {
+  padding: 8px 14px;
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  background: #ffffff;
+  color: #1f2937;
+  transition: border-color 0.2s ease;
+}
+
+.positions-select:hover {
+  border-color: #cbd5f5;
+}
+
+.positions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.position-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 24px 24px 28px;
+  position: relative;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.position-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 32px rgba(15, 23, 42, 0.12);
+}
+
+.verdict-badge {
+  position: absolute;
+  top: -14px;
+  right: 24px;
+  color: #ffffff;
+  padding: 4px 16px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.position-card h2 {
+  margin: 12px 0 16px;
+  font-size: 1.5rem;
+  color: #1f2937;
+}
+
+.description {
+  color: #475569;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.thinkers {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 16px;
+  margin-top: 16px;
+}
+
+.thinkers strong {
+  color: #6366f1;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.thinkers ul {
+  margin: 10px 0 0;
+  padding-left: 20px;
+}
+
+.thinkers li {
+  color: #64748b;
+  margin-top: 6px;
+}
+
+@media (max-width: 768px) {
+  .positions-layout {
+    padding: 24px 16px 40px;
+  }
+
+  .positions-title {
+    font-size: 1.9rem;
+  }
+
+  .positions-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .position-card {
+    padding: 20px 20px 24px;
+  }
+}
+
 .hr {
   height: 1px;
   background: linear-gradient(90deg, transparent, #22324b, transparent);

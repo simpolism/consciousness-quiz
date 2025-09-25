@@ -1,5 +1,5 @@
 import { nodes, startId, getNode } from './data/nodes';
-import type { Node, NodeId, QuestionNode } from './types';
+import type { Node, NodeId } from './types';
 
 interface QuizState {
   current: NodeId;
@@ -48,25 +48,6 @@ const template = `
         <button class="aux" id="restartBtn" title="Restart the quiz">⟲ Restart</button>
       </div>
       <div id="result"></div>
-    </div>
-
-    <div class="card">
-      <details>
-        <summary>What’s in here? (End states & thinkers)</summary>
-        <div class="hr"></div>
-        <div class="small">
-          <strong>Conscious (✅):</strong> Phenomenology (Husserl, Nagel); Functionalism/Computationalism (Putnam, Minsky); Recognition/Social (Hegel, Lacan);
-          Biological Naturalism (Searle, Damasio); Neurobiological Localism (Crick, Koch, Edelman); IIT (Tononi, Koch); GWT (Baars, Dehaene);
-          Predictive Processing (Friston, Clark, Hohwy); HOT (Rosenthal, Carruthers; Kant; Freud); RPT (Lamme); AST (Graziano);
-          Embodied/Enactive (Varela, Thompson, Heidegger); Panpsychism (Strawson, Goff, Whitehead); Idealism/Cosmopsychism (Berkeley, Kastrup; Hegel);
-          Dualism (Descartes, Aquinas).
-          <br/><br/>
-          <strong>Not Conscious (❌):</strong> Behaviorism/Skeptical Restrictionism (Skinner, Searle critique); Restrictive Physicalism; Biological Restrictionism; Dualist exclusion; Quantum mind as human-only; Localist restriction.
-          <br/><br/>
-          <strong>Humans not conscious (🤯):</strong> Eliminativism (P.&P. Churchland); Illusionism/Multiple Drafts (Dennett, Frankish, Blackmore);
-          Mysterianism (McGinn); Buddhist No-Self (traditions), Metzinger.
-        </div>
-      </details>
     </div>
   </div>
 `;
