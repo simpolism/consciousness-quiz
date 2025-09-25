@@ -1,4 +1,5 @@
 import { nodes, startId, getNode } from './data/nodes';
+import { footerTemplate } from './footer';
 import type { Node, NodeId, QuestionNode, QuestionOption, QuestionOptionTone } from './types';
 
 interface HistoryEntry {
@@ -26,18 +27,15 @@ interface QuizElements {
 
 const template = `
   <header>
-    <h1>Consciousness 20Q — Master Quiz</h1>
-    <p>Answer Yes/No to navigate the landscape of consciousness theories. Finish to discover your end state (theory + thinkers).</p>
-    <div class="header-links">
-      <a href="/all-positions.html">View All Positions →</a>
-    </div>
+    <h1>Is It Conscious?</h1>
+    <p>Work through key questions to map your views on consciousness.</p>
   </header>
 
   <div class="container">
       <div class="card" id="quiz">
       <div class="intro-card" id="introCard">
         <h2>How to approach this quiz</h2>
-        <p>These prompts map philosophical stances about consciousness. There are no right answers—use your intuitions, and feel free to consult the “More context” dropdowns if a question feels vague. When ready, start the decision tree below.</p>
+        <p>These prompts map philosophical stances about consciousness. There are no right answers—use your intuitions, and feel free to consult the “More context” dropdowns if a question feels vague. When ready, start the quiz below.</p>
         <button class="control-button control-button--choice" id="startQuizBtn">Begin the quiz</button>
       </div>
       <div class="card-actions" id="quizActions">
@@ -49,11 +47,11 @@ const template = `
       <div id="result"></div>
     </div>
 
-    <footer class="site-footer">
-      <a href="https://github.com/your-org/consciousness-quiz" target="_blank" rel="noopener">
-        View on GitHub →
-      </a>
-    </footer>
+    <div class="header-links header-links--below">
+      <a href="/all-positions.html">View All Positions →</a>
+    </div>
+
+    ${footerTemplate}
   </div>
 `;
 

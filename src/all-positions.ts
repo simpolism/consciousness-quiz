@@ -1,5 +1,6 @@
 import { nodes } from './data/nodes';
 import { EndNode, Verdict } from './types';
+import { footerTemplate } from './footer';
 import './style.css';
 
 // Extract all end nodes from the nodes map
@@ -147,11 +148,7 @@ function renderPage(): void {
           ${displayNodes.map(renderPositionCard).join('')}
         </div>
       </div>
-      <footer class="site-footer site-footer--light">
-        <a href="https://github.com/your-org/consciousness-quiz" target="_blank" rel="noopener">
-          View on GitHub →
-        </a>
-      </footer>
+      ${footerTemplate}
     `;
 
     const selectElement = document.getElementById('verdict-filter') as HTMLSelectElement;
