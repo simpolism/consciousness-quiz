@@ -29,13 +29,16 @@ const template = `
   </header>
 
   <div class="container">
-    <div class="card" id="legend">
-      <div class="legend">
-        <span class="pill">✅ Conscious</span>
-        <span class="pill">❌ Not Conscious</span>
-        <span class="pill">🤯 Humans not conscious (meta-skeptic)</span>
+    <div class="legend-bar" id="legend">
+      <div class="legend-row">
+        <span class="legend-label">Legend:</span>
+        <div class="legend-pills">
+          <span class="pill">✅ Conscious</span>
+          <span class="pill">❌ Not Conscious</span>
+          <span class="pill">🤯 Humans not conscious (meta-skeptic)</span>
+        </div>
       </div>
-      <div class="small" style="margin-top:8px">This quiz is a pedagogical map, not medical or legal advice. It condenses viewpoints from philosophy, cognitive science, and neuroscience.</div>
+      <div class="legend-note small">This quiz is a pedagogical map, not medical or legal advice. It condenses viewpoints from philosophy, cognitive science, and neuroscience.</div>
     </div>
 
     <div class="card" id="quiz">
@@ -49,13 +52,13 @@ const template = `
       </div>
       <div id="result"></div>
     </div>
-  </div>
 
-  <footer class="site-footer">
-    <a href="https://github.com/your-org/consciousness-quiz" target="_blank" rel="noopener">
-      View on GitHub →
-    </a>
-  </footer>
+    <footer class="site-footer">
+      <a href="https://github.com/your-org/consciousness-quiz" target="_blank" rel="noopener">
+        View on GitHub →
+      </a>
+    </footer>
+  </div>
 `;
 
 export class QuizApp {
