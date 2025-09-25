@@ -51,8 +51,8 @@ function escapeHtml(value: string): string {
 
 function replaceGenericTokens(text: string): string {
   return text
-    .replace(/\{\{ENTITY\}\}/g, 'the entity under consideration')
-    .replace(/\{\{ENTITY_CAP\}\}/g, 'The entity under consideration');
+    .replace(/\{\{ENTITY\}\}/g, 'the system')
+    .replace(/\{\{ENTITY_CAP\}\}/g, 'The system');
 }
 
 function renderPositionCard(node: EndNode): string {
