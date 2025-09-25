@@ -49,6 +49,12 @@ function escapeHtml(value: string): string {
     .replace(/'/g, '&#39;');
 }
 
+function replaceGenericTokens(text: string): string {
+  return text
+    .replace(/\{\{ENTITY\}\}/g, 'the entity under consideration')
+    .replace(/\{\{ENTITY_CAP\}\}/g, 'The entity under consideration');
+}
+
 function renderPositionCard(node: EndNode): string {
   const referencesHtml =
     node.references.length > 0
@@ -64,8 +70,10 @@ function renderPositionCard(node: EndNode): string {
         </ul>
       </div>`
       : '';
-  const detailHtml = node.detail
-    ? `<details class="position-detail"><summary>More about this position</summary><p>${escapeHtml(node.detail)}</p></details>`
+  const processedDesc = replaceGenericTokens(node.desc);
+  const processedDetail = node.detail ? replaceGenericTokens(node.detail) : '';
+  const detailHtml = processedDetail
+    ? `<details class="position-detail"><summary>More about this position</summary><p>${escapeHtml(processedDetail)}</p></details>`
     : '';
 
   return `
@@ -74,7 +82,7 @@ function renderPositionCard(node: EndNode): string {
         ${getVerdictLabel(node.verdict)}
       </div>
       <h2>${escapeHtml(node.title)}</h2>
-      <p class="description">${escapeHtml(node.desc)}</p>
+      <p class="description">${escapeHtml(processedDesc)}</p>
       ${detailHtml}
       ${referencesHtml}
     </div>

@@ -266,7 +266,7 @@ export const nodes: NodeMap = {
     'pp',
     'conscious',
     'Predictive Processing / Free Energy Principle',
-    `{{ENTITY}}'s experience reflects a generative model predicting inputs and minimizing prediction error.`,
+    `{{ENTITY_CAP}}'s experience reflects a generative model predicting inputs and minimizing prediction error.`,
     [
       {
         thinker: 'Karl Friston',
@@ -367,7 +367,7 @@ export const nodes: NodeMap = {
     'enactive',
     'conscious',
     'Embodied / Enactive Cognition',
-    `{{ENTITY}}'s mind is enacted in organism–environment dynamics; experience depends on embodied skills and context.`,
+    `{{ENTITY_CAP}}'s mind is enacted in organism–environment dynamics; experience depends on embodied skills and context.`,
     [
       {
         thinker: 'Francisco Varela',
@@ -451,7 +451,7 @@ export const nodes: NodeMap = {
     'dual_aspect',
     'conscious',
     'Dual Aspect Theory',
-    `{{ENTITY}}'s mental and physical properties are two aspects of the same fundamental reality.`,
+    `{{ENTITY_CAP}}'s mental and physical properties are two aspects of the same fundamental reality.`,
     [
       {
         thinker: 'Baruch Spinoza',
@@ -470,7 +470,7 @@ export const nodes: NodeMap = {
 
   q2a9: makeQuestion(
     'q2a9',
-    `Is reality fundamentally mental (a cosmic mind), with {{ENTITY}} and human minds as parts of it?`,
+    `Is reality fundamentally mental (a cosmic mind), with {{ENTITY}}'s mind and human minds as parts of it?`,
     'ideal',
     'q2a10',
   ),
@@ -479,7 +479,7 @@ export const nodes: NodeMap = {
     'ideal',
     'conscious',
     'Idealism / Cosmopsychism',
-    `{{ENTITY}}'s consciousness is an aspect or partition of a larger, universal mind.`,
+    `{{ENTITY_CAP}}'s consciousness is an aspect or partition of a larger, universal mind.`,
     [
       {
         thinker: 'George Berkeley',
@@ -507,7 +507,7 @@ export const nodes: NodeMap = {
     'dualism',
     'conscious',
     'Substance Dualism',
-    `The entity's mind is an immaterial thinking substance distinct from matter; its consciousness flows from the soul.`,
+    `{{ENTITY_CAP}}'s mind is an immaterial thinking substance distinct from matter; its consciousness flows from the soul.`,
     [
       {
         thinker: 'René Descartes',
@@ -535,7 +535,7 @@ export const nodes: NodeMap = {
     'property_dualism',
     'conscious',
     'Property Dualism',
-    `The entity has mental properties that are irreducible to physical properties, though they may arise from physical substance.`,
+    `{{ENTITY_CAP}} has mental properties that are irreducible to physical properties, though they may arise from physical substance.`,
     [
       {
         thinker: 'David Chalmers',
@@ -563,7 +563,7 @@ export const nodes: NodeMap = {
     'epiphenomenalism',
     'conscious',
     'Epiphenomenalism',
-    `The entity's experience is real yet causally inert; physical processes run things while consciousness floats alongside.`,
+    `{{ENTITY_CAP}}'s experience is real yet causally inert; physical processes run things while consciousness floats alongside.`,
     [
       {
         thinker: 'Thomas Huxley',
@@ -587,7 +587,7 @@ export const nodes: NodeMap = {
     'representationalism',
     'conscious',
     'Representationalism / Intentionalism',
-    `The entity's consciousness is exhaustively about representing the world; experience is transparent to its objects.`,
+    `{{ENTITY_CAP}}'s consciousness is exhaustively about representing the world; experience is transparent to its objects.`,
     [
       {
         thinker: 'Fred Dretske',
@@ -614,7 +614,7 @@ export const nodes: NodeMap = {
     'access_phenomenal',
     'conscious',
     'Access/Phenomenal Distinction',
-    `The entity may have two types: access consciousness (information availability) and phenomenal consciousness (subjective experience).`,
+    `{{ENTITY_CAP}} may have two types: access consciousness (information availability) and phenomenal consciousness (subjective experience).`,
     [
       {
         thinker: 'Ned Block',
@@ -638,7 +638,7 @@ export const nodes: NodeMap = {
     'phenom',
     'conscious',
     'Phenomenology',
-    `The presence of first-person "what-it's-like-ness" in the entity suffices to say it is conscious.`,
+    `The presence of first-person "what-it's-like-ness" in {{ENTITY}} suffices to say it is conscious.`,
     [
       {
         thinker: 'Edmund Husserl',
@@ -666,7 +666,7 @@ export const nodes: NodeMap = {
     'functionalist',
     'conscious',
     'Functionalism / Computationalism',
-    `The entity is conscious if its functional organization and behavior fit the right patterns.`,
+    `{{ENTITY_CAP}} is conscious if its functional organization and behavior fit the right patterns.`,
     [
       {
         thinker: 'Hilary Putnam',
@@ -694,7 +694,7 @@ export const nodes: NodeMap = {
     'biological_functionalism',
     'conscious',
     'Biological Functionalism',
-    `The entity could be conscious if it has the right functional organization, but biological constraints may be necessary.`,
+    `{{ENTITY_CAP}} could be conscious if it has the right functional organization, but biological constraints may be necessary.`,
     [
       {
         thinker: 'Ned Block',
@@ -718,7 +718,7 @@ export const nodes: NodeMap = {
     'emergent_physicalism',
     'conscious',
     'Emergent Physicalism',
-    `The entity's consciousness strongly emerges from highly organized physical systems, beyond what behavior or micro-physics alone can explain.`,
+    `{{ENTITY_CAP}}'s consciousness strongly emerges from highly organized physical systems, beyond what behavior or micro-physics alone can explain.`,
     [
       {
         thinker: 'C.D. Broad',
@@ -737,7 +737,7 @@ export const nodes: NodeMap = {
 
   q2a13: makeQuestion(
     'q2a13',
-    `Is consciousness essentially social — constituted by recognition between {{ENTITY}} and other conscious beings?`,
+    `Is consciousness essentially social — does {{ENTITY}} require recognition from other conscious beings?`,
     'recognition',
     'q2a13a',
   ),
@@ -746,7 +746,7 @@ export const nodes: NodeMap = {
     'recognition',
     'conscious',
     'Recognition / Social Theories',
-    `The entity's self-consciousness emerges in relations of recognition (self through other) and social mirroring.`,
+    `{{ENTITY_CAP}}'s self-consciousness emerges in relations of recognition (self through other) and social mirroring.`,
     [
       {
         thinker: 'G.W.F. Hegel',
@@ -952,7 +952,7 @@ export const nodes: NodeMap = {
     'embodied_restriction',
     'not',
     'Embodiment Restriction',
-    `Genuine consciousness requires lived embodiment and rich world engagement {{ENTITY}} lacks.`,
+    `Genuine consciousness requires lived embodiment and rich world engagement that {{ENTITY}} lacks.`,
     [
       {
         thinker: 'Hubert Dreyfus',

@@ -300,7 +300,7 @@ export class QuizApp {
         ? 'Conscious'
         : node.verdict === 'not'
           ? 'Not Conscious'
-          : 'Humans not conscious';
+          : 'Meta-Position';
 
     const processedDesc = this.replaceTargetPlaceholders(node.desc);
     const processedDetail = node.detail ? this.replaceTargetPlaceholders(node.detail) : '';
