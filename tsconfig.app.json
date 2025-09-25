@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowSyntheticDefaultImports": true,
+    "target": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "jsx": "preserve",
+    "types": [],
+    "useDefineForClassFields": true,
+    "allowJs": false,
+    "skipLibCheck": true
+  },
+  "include": ["src"],
+  "exclude": ["src/**/*.test.ts", "src/**/*.spec.ts"]
+}
