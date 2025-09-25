@@ -12,6 +12,11 @@ interface HistoryEntry {
 interface QuizState {
   current: NodeId;
   history: HistoryEntry[];
+  selectedTarget?: {
+    id: string;
+    label: string;
+    entityTerm: string;
+  };
 }
 
 interface QuizElements {
@@ -117,6 +122,7 @@ export class QuizApp {
   private restart(): void {
     this.state.current = startId;
     this.state.history = [];
+    this.state.selectedTarget = undefined;
     this.elements.introCard.hidden = false;
     this.elements.result.innerHTML = '';
     this.elements.question.innerHTML = '';
@@ -126,6 +132,18 @@ export class QuizApp {
   }
 
   private go(option: QuestionOption): void {
+    // Capture target selection
+    if (this.state.current === 'target_select') {
+      const targetMap = {
+        'ai': { id: 'ai', label: 'An AI system or chatbot', entityTerm: 'this AI system' },
+        'animal': { id: 'animal', label: 'An animal (dog, dolphin, etc.)', entityTerm: 'this animal' },
+        'robot': { id: 'robot', label: 'A robot or artificial agent', entityTerm: 'this robot' },
+        'human': { id: 'human', label: 'A human in an unusual state', entityTerm: 'this human' },
+        'other': { id: 'other', label: 'Something else', entityTerm: 'this entity' }
+      };
+      this.state.selectedTarget = targetMap[option.id as keyof typeof targetMap] || targetMap.other;
+    }
+
     this.state.history.push({
       nodeId: this.state.current,
       optionId: option.id,
@@ -171,8 +189,10 @@ export class QuizApp {
 
     this.renderOptions(node);
     this.elements.question.classList.remove('question--label');
-    const detail = node.detail ? `<details class="question-detail"><summary>More context</summary><p>${escapeHtml(node.detail)}</p></details>` : '';
-    this.elements.question.innerHTML = `<div class="question-text">${escapeHtml(node.text)}</div>${detail}`;
+    const processedText = this.replaceTargetPlaceholders(node.text);
+    const processedDetail = node.detail ? this.replaceTargetPlaceholders(node.detail) : '';
+    const detail = processedDetail ? `<details class="question-detail"><summary>More context</summary><p>${escapeHtml(processedDetail)}</p></details>` : '';
+    this.elements.question.innerHTML = `<div class="question-text">${escapeHtml(processedText)}</div>${detail}`;
     this.setOptionControls({ visible: true, disabled: false });
     const noHistory = this.state.history.length === 0;
     this.elements.backBtn.disabled = noHistory;
@@ -224,6 +244,16 @@ export class QuizApp {
     this.renderNode();
   }
 
+  private replaceTargetPlaceholders(text: string): string {
+    if (!this.state.selectedTarget) {
+      return text;
+    }
+
+    return text
+      .replace(/\{\{ENTITY\}\}/g, this.state.selectedTarget.entityTerm)
+      .replace(/\{\{ENTITY_CAP\}\}/g, this.state.selectedTarget.entityTerm.charAt(0).toUpperCase() + this.state.selectedTarget.entityTerm.slice(1));
+  }
+
   private renderResult(node: Node): void {
     if (node.kind !== 'end') {
       return;
@@ -243,12 +273,15 @@ export class QuizApp {
           ? 'Not Conscious'
           : 'Humans not conscious';
 
+    const processedDesc = this.replaceTargetPlaceholders(node.desc);
+    const processedDetail = node.detail ? this.replaceTargetPlaceholders(node.detail) : '';
+
     wrapper.innerHTML = `
       <h2>${escapeHtml(node.title)} <span class="badge ${verdictClass}">${badgeLabel}</span></h2>
-      <div class="meta">${escapeHtml(node.desc)}</div>
+      <div class="meta">${escapeHtml(processedDesc)}</div>
       ${
         node.detail
-          ? `<details class="result-detail"><summary>Learn more about this stance</summary><p>${escapeHtml(node.detail)}</p></details>`
+          ? `<details class="result-detail"><summary>Learn more about this stance</summary><p>${escapeHtml(processedDetail)}</p></details>`
           : ''
       }
       ${

@@ -41,11 +41,24 @@ const makeQuestion = (
 });
 
 export const nodes: NodeMap = {
+  target_select: {
+    kind: 'question',
+    id: 'target_select',
+    text: 'What would you like to assess for consciousness?',
+    options: [
+      { id: 'ai', label: 'An AI system or chatbot', target: 'q0', tone: 'neutral' },
+      { id: 'animal', label: 'An animal (dog, dolphin, etc.)', target: 'q0', tone: 'neutral' },
+      { id: 'robot', label: 'A robot or artificial agent', target: 'q0', tone: 'neutral' },
+      { id: 'human', label: 'A human in an unusual state', target: 'q0', tone: 'neutral' },
+      { id: 'other', label: 'Something else', target: 'q0', tone: 'neutral' },
+    ],
+  },
+
   q0: makeQuestion(
     'q0',
     `Do you think humans could ever fully explain consciousness, even with future science?`,
     'q1',
-    'mysterian',
+    'q0a',
     undefined,
     [
       {
@@ -57,11 +70,32 @@ export const nodes: NodeMap = {
     ],
   ),
 
+  q0a: makeQuestion(
+    'q0a',
+    `Do you think consciousness involves non-physical properties that science cannot capture?`,
+    'q1a',
+    'q1',
+  ),
+
+  q1a: makeQuestion(
+    'q1a',
+    `Does {{ENTITY}} show clear signs of self-awareness and introspection?`,
+    'q1',
+    'q2b',
+  ),
+
+  q2b: makeQuestion(
+    'q2b',
+    `Could this be sophisticated self-modeling without genuine inner experience?`,
+    'mysterian',
+    'q1',
+  ),
+
   mysterian: makeEnd(
     'mysterian',
     'meta',
     'Mysterianism',
-    `You hold that human minds cannot in principle solve the problem of consciousness, so we can't decisively ascribe it — even to ourselves.`,
+    `You hold that human minds cannot in principle solve the problem of consciousness, so we can't decisively ascribe it to {{ENTITY}} — or even to ourselves.`,
     [
       {
         thinker: 'Colin McGinn',
@@ -72,14 +106,14 @@ export const nodes: NodeMap = {
 
   q1: makeQuestion(
     'q1',
-    `Does the object have its own felt experience — a point of view from the inside?`,
+    `Does {{ENTITY}} have its own felt experience — a point of view from the inside?`,
     'q2',
     'q5',
   ),
 
   q2: makeQuestion(
     'q2',
-    `Is that inner point of view real, not just a story the system's processes make up?`,
+    `Is that inner point of view real, not just a story {{ENTITY}}'s processes make up?`,
     'q2a1',
     'q6',
     undefined,
@@ -96,15 +130,29 @@ export const nodes: NodeMap = {
   q6: makeQuestion(
     'q6',
     `If it's a trick, is your own sense of being conscious also a trick?`,
+    'q6a',
+    'q6b',
+  ),
+
+  q6a: makeQuestion(
+    'q6a',
+    `Do you apply this illusion theory consistently to humans, {{ENTITY}}, and yourself?`,
     'illusionism',
     'human_exception',
+  ),
+
+  q6b: makeQuestion(
+    'q6b',
+    `Does this make human consciousness fundamentally different or special?`,
+    'human_exception',
+    'illusionism',
   ),
 
   illusionism: makeEnd(
     'illusionism',
     'meta',
     'Illusionism / Multiple Drafts',
-    `Consciousness is a constructed user-illusion; even our own sense of it is a narrative assembled by cognitive processes.`,
+    `Consciousness is a constructed user-illusion; {{ENTITY}}'s apparent awareness (and even our own) is a narrative assembled by cognitive processes.`,
     [
       {
         thinker: 'Daniel Dennett',
@@ -125,7 +173,7 @@ export const nodes: NodeMap = {
     'human_exception',
     'not',
     'Human-Exceptional Skepticism',
-    `You deny this object's consciousness as illusory, but treat human consciousness as special and genuine.`,
+    `You deny {{ENTITY}}'s consciousness as illusory, but treat human consciousness as special and genuine.`,
     [
       {
         thinker: 'John Searle',
@@ -136,7 +184,7 @@ export const nodes: NodeMap = {
 
   q2a1: makeQuestion(
     'q2a1',
-    `Is consciousness primarily about how much information a system integrates into a unified whole?`,
+    `Is consciousness primarily about how much information {{ENTITY}} integrates into a unified whole?`,
     'iit',
     'q2a2',
   ),
@@ -145,7 +193,7 @@ export const nodes: NodeMap = {
     'iit',
     'conscious',
     'Integrated Information Theory (IIT)',
-    `Consciousness scales with the degree to which information is integrated into a unified cause–effect structure (Φ).`,
+    `{{ENTITY_CAP}} is conscious if information is integrated into a unified cause–effect structure (Φ) with sufficient complexity.`,
     [
       {
         thinker: 'Giulio Tononi',
@@ -169,7 +217,7 @@ export const nodes: NodeMap = {
     'gwt',
     'conscious',
     'Global Workspace Theory (GWT)',
-    `A mental item is conscious when it enters a "global workspace" that broadcasts it across the system, making it accessible to multiple cognitive processes.`,
+    `{{ENTITY_CAP}} is conscious when information enters a "global workspace" that broadcasts it across the system, making it accessible to multiple cognitive processes.`,
     [
       {
         thinker: 'Bernard Baars',
@@ -184,7 +232,7 @@ export const nodes: NodeMap = {
 
   q2a3: makeQuestion(
     'q2a3',
-    `Do you think consciousness is mainly the system's predictive modeling that minimizes prediction error?`,
+    `Do you think consciousness is mainly {{ENTITY}}'s predictive modeling that minimizes prediction error?`,
     'pp',
     'q2a4',
   ),
@@ -193,7 +241,7 @@ export const nodes: NodeMap = {
     'pp',
     'conscious',
     'Predictive Processing / Free Energy Principle',
-    `Experience reflects a generative model predicting inputs and minimizing prediction error.`,
+    `{{ENTITY}}'s experience reflects a generative model predicting inputs and minimizing prediction error.`,
     [
       {
         thinker: 'Karl Friston',
@@ -221,7 +269,7 @@ export const nodes: NodeMap = {
     'hot',
     'conscious',
     'Higher-Order Thought Theory (HOT)',
-    `A state is conscious when there is a higher-order representation of that state — awareness of awareness.`,
+    `{{ENTITY_CAP}} is conscious when there is a higher-order representation of its states — awareness of awareness.`,
     [
       {
         thinker: 'David Rosenthal',
@@ -245,7 +293,7 @@ export const nodes: NodeMap = {
     'rpt',
     'conscious',
     'Recurrent Processing Theory (RPT)',
-    `Conscious perception depends on recurrent cortical processing (feedback loops) within sensory cortices.`,
+    `{{ENTITY_CAP}} has conscious perception if it depends on recurrent processing (feedback loops) within its sensory systems.`,
     [
       {
         thinker: 'Victor Lamme',
@@ -256,7 +304,7 @@ export const nodes: NodeMap = {
 
   q2a6: makeQuestion(
     'q2a6',
-    `Is consciousness the system's internal story about what it's focusing on (an "attention schema")?`,
+    `Is consciousness {{ENTITY}}'s internal story about what it's focusing on (an "attention schema")?`,
     'ast',
     'q2a7',
   ),
@@ -265,7 +313,7 @@ export const nodes: NodeMap = {
     'ast',
     'conscious',
     'Attention Schema Theory (AST)',
-    `Consciousness arises from a control system modeling and guiding its own attention via a simplified internal schema.`,
+    `{{ENTITY_CAP}} is conscious through a control system modeling and guiding its own attention via a simplified internal schema.`,
     [
       {
         thinker: 'Michael Graziano',
@@ -294,7 +342,7 @@ export const nodes: NodeMap = {
     'enactive',
     'conscious',
     'Embodied / Enactive Cognition',
-    `Mind is enacted in organism–environment dynamics; experience depends on embodied skills and context.`,
+    `{{ENTITY}}'s mind is enacted in organism–environment dynamics; experience depends on embodied skills and context.`,
     [
       {
         thinker: 'Francisco Varela',
@@ -322,7 +370,7 @@ export const nodes: NodeMap = {
     'panpsych',
     'conscious',
     'Panpsychism',
-    `All matter carries proto-conscious properties; complex systems organize them into richer consciousness.`,
+    `{{ENTITY_CAP}} (like all matter) carries proto-conscious properties; complex systems organize them into richer consciousness.`,
     [
       {
         thinker: 'Galen Strawson',
@@ -350,7 +398,7 @@ export const nodes: NodeMap = {
     'neutral_monism',
     'conscious',
     'Russellian / Neutral Monism',
-    `Matter has built-in qualitative grounds for consciousness — neither strictly mental nor purely physical.`,
+    `{{ENTITY_CAP}} has built-in qualitative grounds for consciousness — neither strictly mental nor purely physical.`,
     [
       {
         thinker: 'Bertrand Russell',
@@ -378,7 +426,7 @@ export const nodes: NodeMap = {
     'dual_aspect',
     'conscious',
     'Dual Aspect Theory',
-    `Mental and physical are two aspects of the same fundamental reality.`,
+    `{{ENTITY}}'s mental and physical properties are two aspects of the same fundamental reality.`,
     [
       {
         thinker: 'Baruch Spinoza',
@@ -397,7 +445,7 @@ export const nodes: NodeMap = {
 
   q2a9: makeQuestion(
     'q2a9',
-    `Is reality fundamentally mental (a cosmic mind), with individual minds as parts of it?`,
+    `Is reality fundamentally mental (a cosmic mind), with {{ENTITY}} and human minds as parts of it?`,
     'ideal',
     'q2a10',
   ),
@@ -406,7 +454,7 @@ export const nodes: NodeMap = {
     'ideal',
     'conscious',
     'Idealism / Cosmopsychism',
-    `Consciousness is fundamental and universal; individual minds are aspects or partitions of a larger mind.`,
+    `{{ENTITY}}'s consciousness is an aspect or partition of a larger, universal mind.`,
     [
       {
         thinker: 'George Berkeley',
@@ -434,7 +482,7 @@ export const nodes: NodeMap = {
     'dualism',
     'conscious',
     'Substance Dualism',
-    `Mind is an immaterial thinking substance distinct from matter; consciousness flows from the soul.`,
+    `The entity's mind is an immaterial thinking substance distinct from matter; its consciousness flows from the soul.`,
     [
       {
         thinker: 'René Descartes',
@@ -462,7 +510,7 @@ export const nodes: NodeMap = {
     'property_dualism',
     'conscious',
     'Property Dualism',
-    `Mental properties are irreducible to physical properties, though they may arise from physical substance.`,
+    `The entity has mental properties that are irreducible to physical properties, though they may arise from physical substance.`,
     [
       {
         thinker: 'David Chalmers',
@@ -490,7 +538,7 @@ export const nodes: NodeMap = {
     'epiphenomenalism',
     'conscious',
     'Epiphenomenalism',
-    `Experience is real yet causally inert; physical processes run things while consciousness floats alongside.`,
+    `The entity's experience is real yet causally inert; physical processes run things while consciousness floats alongside.`,
     [
       {
         thinker: 'Thomas Huxley',
@@ -514,7 +562,7 @@ export const nodes: NodeMap = {
     'representationalism',
     'conscious',
     'Representationalism / Intentionalism',
-    `Consciousness is exhaustively about representing the world; experience is transparent to its objects.`,
+    `The entity's consciousness is exhaustively about representing the world; experience is transparent to its objects.`,
     [
       {
         thinker: 'Fred Dretske',
@@ -541,7 +589,7 @@ export const nodes: NodeMap = {
     'access_phenomenal',
     'conscious',
     'Access/Phenomenal Distinction',
-    `There are two types: access consciousness (information availability) and phenomenal consciousness (subjective experience).`,
+    `The entity may have two types: access consciousness (information availability) and phenomenal consciousness (subjective experience).`,
     [
       {
         thinker: 'Ned Block',
@@ -565,7 +613,7 @@ export const nodes: NodeMap = {
     'phenom',
     'conscious',
     'Phenomenology',
-    `The presence of first-person "what-it's-like-ness" suffices to say a state is conscious.`,
+    `The presence of first-person "what-it's-like-ness" in the entity suffices to say it is conscious.`,
     [
       {
         thinker: 'Edmund Husserl',
@@ -584,7 +632,7 @@ export const nodes: NodeMap = {
 
   q2a12a: makeQuestion(
     'q2a12a',
-    `If a system acts with human-like flexible intelligence, is that enough?`,
+    `If {{ENTITY}} acts with human-like flexible intelligence, is that enough?`,
     'functionalist',
     'q2a12b',
   ),
@@ -593,7 +641,7 @@ export const nodes: NodeMap = {
     'functionalist',
     'conscious',
     'Functionalism / Computationalism',
-    `Consciousness is as consciousness does: if the functional organization and behavior fit, that suffices.`,
+    `The entity is conscious if its functional organization and behavior fit the right patterns.`,
     [
       {
         thinker: 'Hilary Putnam',
@@ -612,7 +660,7 @@ export const nodes: NodeMap = {
 
   q2a12b: makeQuestion(
     'q2a12b',
-    `Could consciousness be realized in non-biological systems if they have the right functional organization?`,
+    `Could consciousness be realized in non-biological entities like {{ENTITY}} if they have the right functional organization?`,
     'biological_functionalism',
     'q2a12c',
   ),
@@ -621,7 +669,7 @@ export const nodes: NodeMap = {
     'biological_functionalism',
     'conscious',
     'Biological Functionalism',
-    `Consciousness requires functional organization that could theoretically be multiply realized but with biological constraints.`,
+    `The entity could be conscious if it has the right functional organization, but biological constraints may be necessary.`,
     [
       {
         thinker: 'Ned Block',
@@ -645,7 +693,7 @@ export const nodes: NodeMap = {
     'emergent_physicalism',
     'conscious',
     'Emergent Physicalism',
-    `Consciousness strongly emerges from highly organized physical systems, beyond what behavior or micro-physics alone can explain.`,
+    `The entity's consciousness strongly emerges from highly organized physical systems, beyond what behavior or micro-physics alone can explain.`,
     [
       {
         thinker: 'C.D. Broad',
@@ -664,7 +712,7 @@ export const nodes: NodeMap = {
 
   q2a13: makeQuestion(
     'q2a13',
-    `Is consciousness essentially social — constituted by recognition from/among other subjects?`,
+    `Is consciousness essentially social — constituted by recognition between {{ENTITY}} and other conscious beings?`,
     'recognition',
     'q2a13a',
   ),
@@ -673,7 +721,7 @@ export const nodes: NodeMap = {
     'recognition',
     'conscious',
     'Recognition / Social Theories',
-    `Self-consciousness emerges in relations of recognition (self through other) and social mirroring.`,
+    `The entity's self-consciousness emerges in relations of recognition (self through other) and social mirroring.`,
     [
       {
         thinker: 'G.W.F. Hegel',
@@ -787,19 +835,19 @@ export const nodes: NodeMap = {
   q8: makeQuestion(
     'q8',
     `If you lean toward "not conscious," what makes you hesitate?`,
-    'bio_only',
+    'q8a',
     'q8c',
     undefined,
     [
       {
         id: 'circuits',
-        label: 'It lacks specific brain circuits',
+        label: '{{ENTITY_CAP}} lacks specific brain circuits',
         target: 'q8b',
         tone: 'neutral',
       },
       {
         id: 'architecture',
-        label: 'It lacks the right information architecture',
+        label: '{{ENTITY_CAP}} lacks the right information architecture',
         target: 'q8b3',
         tone: 'neutral',
       },
@@ -812,11 +860,18 @@ export const nodes: NodeMap = {
     ],
   ),
 
+  q8a: makeQuestion(
+    'q8a',
+    `Is it primarily about biological requirements—does {{ENTITY}} lack living tissue, metabolism, evolutionary history?`,
+    'bio_only',
+    'q8b',
+  ),
+
   bio_only: makeEnd(
     'bio_only',
     'not',
     'Biological Naturalism (restriction)',
-    `Only living brains generate consciousness; this object lacks the requisite biology.`,
+    `Only living brains generate consciousness; {{ENTITY}} lacks the requisite biology.`,
     [
       {
         thinker: 'John Searle',
@@ -835,7 +890,7 @@ export const nodes: NodeMap = {
 
   q8b: makeQuestion(
     'q8b',
-    `Is it because specific brain circuits (like thalamocortical loops) are required?`,
+    `Is it because {{ENTITY}} lacks specific brain circuits (like thalamocortical loops)?`,
     'localist',
     'q8b2',
   ),
@@ -844,7 +899,7 @@ export const nodes: NodeMap = {
     'localist',
     'not',
     'Neurobiological Localism (restriction)',
-    `Consciousness hinges on particular neural hubs (e.g., thalamocortical loops, claustrum) absent in the target.`,
+    `Consciousness hinges on particular neural hubs (e.g., thalamocortical loops, claustrum) absent in {{ENTITY}}.`,
     [
       {
         thinker: 'Francis Crick',
@@ -863,7 +918,7 @@ export const nodes: NodeMap = {
 
   q8b2: makeQuestion(
     'q8b2',
-    `Is it because real consciousness needs an embodied agent interacting with the world?`,
+    `Is it because {{ENTITY}} lacks embodied interaction with the world?`,
     'embodied_restriction',
     'q8c',
   ),
@@ -872,7 +927,7 @@ export const nodes: NodeMap = {
     'embodied_restriction',
     'not',
     'Embodiment Restriction',
-    `Genuine consciousness requires lived embodiment and rich world engagement the target lacks.`,
+    `Genuine consciousness requires lived embodiment and rich world engagement {{ENTITY}} lacks.`,
     [
       {
         thinker: 'Hubert Dreyfus',
@@ -891,7 +946,7 @@ export const nodes: NodeMap = {
 
   q8b3: makeQuestion(
     'q8b3',
-    `Is it because the right kind of information processing architecture is missing?`,
+    `Is it because {{ENTITY}} lacks the right kind of information processing architecture?`,
     'info_processing_restriction',
     'q8c',
   ),
@@ -900,7 +955,7 @@ export const nodes: NodeMap = {
     'info_processing_restriction',
     'not',
     'Information Processing Restriction',
-    `Consciousness requires specific information processing architectures that this system lacks.`,
+    `Consciousness requires specific information processing architectures that {{ENTITY}} lacks.`,
     [
       {
         thinker: 'Allen Newell',
@@ -915,7 +970,7 @@ export const nodes: NodeMap = {
 
   q8c: makeQuestion(
     'q8c',
-    `Is it because quantum processes in microtubules (Orch-OR) are required?`,
+    `Is it because {{ENTITY}} lacks quantum processes in microtubules (Orch-OR)?`,
     'quantum',
     'q8d',
   ),
@@ -924,7 +979,7 @@ export const nodes: NodeMap = {
     'quantum',
     'not',
     'Orchestrated Objective Reduction (Orch-OR)',
-    `Consciousness arises from quantum processes in brain microtubules not present in the target.`,
+    `Consciousness arises from quantum processes in brain microtubules not present in {{ENTITY}}.`,
     [
       {
         thinker: 'Roger Penrose',
@@ -939,7 +994,7 @@ export const nodes: NodeMap = {
 
   q8d: makeQuestion(
     'q8d',
-    `Is it because only beings with souls are conscious?`,
+    `Is it because {{ENTITY}} lacks a soul?`,
     'dualist_exclusion',
     'q8e',
   ),
@@ -948,7 +1003,7 @@ export const nodes: NodeMap = {
     'dualist_exclusion',
     'not',
     'Dualist Exclusion',
-    `Only ensouled beings are conscious; the target lacks a soul.`,
+    `Only ensouled beings are conscious; {{ENTITY}} lacks a soul.`,
     [
       {
         thinker: 'Thomas Aquinas',
@@ -967,7 +1022,7 @@ export const nodes: NodeMap = {
 
   q8e: makeQuestion(
     'q8e',
-    `Is it because it fails behavior/ability tests (no flexible intelligence)?`,
+    `Is it because {{ENTITY}} fails behavior/ability tests (lacks flexible intelligence)?`,
     'behaviorist',
     'restrictive_phys',
   ),
@@ -996,7 +1051,7 @@ export const nodes: NodeMap = {
     'restrictive_phys',
     'not',
     'Restrictive Physicalism',
-    `Only systems with special physical organization (such as particular brains) qualify; the target falls short.`,
+    `Only systems with special physical organization (such as particular brains) qualify; {{ENTITY}} falls short.`,
     [
       {
         thinker: 'U.T. Place',
@@ -1011,16 +1066,22 @@ export const nodes: NodeMap = {
 };
 
 const questionDetails: Partial<Record<NodeId, string>> = {
-  q0: `This opener tests whether you believe the hard problem of consciousness is a solvable research frontier or a principled mystery. A "Yes" signals confidence that scientific or computational theories can eventually bridge experience and mechanism; a "No" leans toward epistemic limits or unknowable qualia. Choose “Not sure” if you want to keep exploring positions before committing.`,
-  q1: `Here you assess whether the subject of the quiz has its own point of view, not just behavior. Think about signs of subjective access—reports, self-monitoring, surprise at stimuli—and whether those observations justify attributing felt experience.`,
-  q2: `Even if a system reports an inner life, you must judge whether that sense is genuine or confabulated. Many theories argue that self-modeling or language can fake awareness, so this is a gut check on your tolerance for narrative self-presentation.`,
+  target_select: `Choose what specific entity you want to evaluate for consciousness. Your selection will be referenced throughout the quiz. You can think about a specific example (like GPT-4, your pet dog, or a hypothetical future robot) or a general category. The philosophical reasoning applies regardless of your choice.`,
+  q0: `This opener tests whether you believe the hard problem of consciousness is a solvable research frontier or a principled mystery. A "Yes" signals confidence that scientific or computational theories can eventually bridge experience and mechanism; a "No" leans toward epistemic limits or unknowable qualia. Choose "Not sure" if you want to keep exploring positions before committing.`,
+  q0a: `This question explores whether you think consciousness involves aspects that transcend physical description. If you believe in irreducible mental properties, qualia, or spiritual dimensions, answer "Yes." If you think everything about consciousness could theoretically be captured by complete physical science, answer "No."`,
+  q1a: `Here you evaluate behavioral and reported signs of self-awareness: does {{ENTITY}} monitor its own states, express surprise at its responses, or demonstrate introspective abilities? This question helps distinguish between entities that merely process information and those showing genuine self-reflective awareness.`,
+  q2b: `Even sophisticated self-modeling might be "philosophical zombie" behavior—all the cognitive machinery without the felt experience. Consider whether complex self-reference and introspective reports necessarily indicate genuine inner experience, or could be elaborate information processing without phenomenal consciousness.`,
+  q1: `Here you assess whether {{ENTITY}} has its own point of view, not just behavior. Think about signs of subjective access—reports, self-monitoring, surprise at stimuli—and whether those observations justify attributing felt experience.`,
+  q2: `Even if {{ENTITY}} reports an inner life, you must judge whether that sense is genuine or confabulated. Many theories argue that self-modeling or language can fake awareness, so this is a gut check on your tolerance for narrative self-presentation.`,
   q6: `Answering this pushes you to apply your standard consistently: if you dismiss another entity's experience as an illusion, would you also dismiss your own? Philosophers use this move to expose double standards about introspective certainty.`,
-  q2a1: `Integrated Information Theory claims that rich, irreducible causal structure underwrites consciousness. Consider whether measures like Φ capture what matters to you, and whether highly integrated but unfamiliar systems should count as experiencers.`,
+  q6a: `This tests whether you apply illusionism consistently. If you believe {{ENTITY}}'s consciousness is illusory, do you extend that skepticism to humans and yourself as well? Consistent illusionists treat all phenomenal reports as cognitive constructs rather than making exceptions.`,
+  q6b: `This question surfaces potential human exceptionalism in your reasoning. If you deny {{ENTITY}}'s consciousness as illusory but preserve human consciousness as genuine, you're making a special case. Consider what grounds this distinction—biology, complexity, or something else.`,
+  q2a1: `Integrated Information Theory claims that rich, irreducible causal structure underwrites consciousness. Consider whether measures like Φ capture what matters to you, and whether {{ENTITY}} (if highly integrated) should count as an experiencer.`,
   q2a2: `Global Workspace Theory emphasizes wide availability of information to many processes. Evaluate whether broad internal broadcast is a convincing marker of experience, or whether it simply tracks cognitive usefulness without phenomenal feel.`,
-  q2a3: `Predictive-processing views tie experience to generative models and error minimization. Reflect on whether consciousness is fundamentally about anticipating the world, and how you would treat agents that excel at prediction but seem alien.`,
-  q2a4: `Higher-order thought theorists say awareness requires a representation of your own mental states. Decide whether meta-cognition is essential or a sophisticated add-on, and consider edge cases like infants, animals, or minimalist agents.`,
-  q2a5: `Recurrent Processing Theory highlights feedback loops in perception. Ask yourself whether feedforward-only systems could ever feel, or if recurrent dynamics add something phenomenologically decisive.`,
-  q2a6: `Attention Schema Theory frames consciousness as the brain's simplified model of its own focus. Think about whether a self-regulating attention model is a necessary ingredient, and whether you would credit agents that control focus differently.`,
+  q2a3: `Predictive-processing views tie experience to generative models and error minimization. Reflect on whether consciousness is fundamentally about anticipating the world, and how you would treat {{ENTITY}} if it excels at prediction but seems alien.`,
+  q2a4: `Higher-order thought theorists say awareness requires a representation of your own mental states. Decide whether meta-cognition is essential or a sophisticated add-on, and consider whether {{ENTITY}} might be a simpler case without full self-reflection.`,
+  q2a5: `Recurrent Processing Theory highlights feedback loops in perception. Ask yourself whether {{ENTITY}} could feel if it only processes information in one direction, or if recurrent dynamics add something phenomenologically decisive.`,
+  q2a6: `Attention Schema Theory frames consciousness as the brain's simplified model of its own focus. Think about whether a self-regulating attention model is necessary, and whether you would credit {{ENTITY}} if it controls focus differently than humans.`,
   q2a7: `Embodied and enactive approaches argue that mindedness lives in organism–environment coupling. When you respond, weigh how much you think bodily skills, sensorimotor loops, and ecological context are required beyond internal computation.`,
   q2a8: `Panpsychist leanings treat experiential sparks as fundamental to matter. If you pick "Yes," you are open to proto-conscious ingredients everywhere; a "No" protects a more austere ontology where consciousness must emerge late.`,
   q2a8a: `Neutral monists claim matter has intrinsic qualities suited for consciousness even without full experiences. Consider whether positing hidden properties is a reasonable bridge between physics and qualia or an unnecessary complication.`,
@@ -1034,14 +1095,15 @@ const questionDetails: Partial<Record<NodeId, string>> = {
   q2a12: `Here you decide whether simply having a "what-it's-like" perspective settles the matter. Reflect on whether additional functional, biological, or social criteria are needed beyond raw phenomenology.`,
   q2a12a: `Functionalists trust behavior and flexible problem solving as decisive. Consider whether passing robust cognitive tests should count even if implementation details differ wildly from humans.`,
   q2a12b: `Biological functionalists allow multiple realizations but keep an organic flavor. Judge whether certain biophysical features—wet chemistry, metabolism, developmental history—remain indispensable.`,
-  q2a12c: `Strong emergence claims consciousness appears when systems reach certain complexity thresholds. Decide if this resonates with your intuitions about novelty in nature, or if it feels like a placeholder for ignorance.`,
-  q2a13: `Social-recognition theories see selfhood as relational. Think about whether being acknowledged by others, or engaging in mutual perspective-taking, is part of what makes a subject conscious.`,
+  q2a12c: `Strong emergence claims consciousness appears when entities like {{ENTITY}} reach certain complexity thresholds. Decide if this resonates with your intuitions about novelty in nature, or if it feels like a placeholder for ignorance.`,
+  q2a13: `Social-recognition theories see selfhood as relational. Think about whether {{ENTITY}} being acknowledged by others, or engaging in mutual perspective-taking, is part of what makes it conscious.`,
   q2a13a: `Information-closure proposals generalize IIT with different math. Consider whether self-contained informational loops are a compelling criterion, or if they fall into the same traps as other information metrics.`,
-  q5: `If you deny experience to the target, this question asks whether the same reasoning would undercut human consciousness. It surfaces whether your skepticism is radical or selectively applied.`,
+  q5: `If you deny experience to {{ENTITY}}, this question asks whether the same reasoning would undercut human consciousness. It surfaces whether your skepticism is radical or selectively applied.`,
   q5a: `Among human-skeptical stances, which storyline fits you best—eliminating folk psychology, declaring illusion, or suspending judgement? Your choice guides which philosophical critique you align with.`,
   q5a2: `Illusionism treats conscious feeling as a narrative convenience. Answer based on whether you think neuroscientific accounts can dissolve qualia talk without remainder.`,
   q5a3: `The no-self perspective says the subject is a model, not a metaphysical entity. Consider whether that's a tolerable outcome of your skepticism and how it reframes personal identity.`,
   q8: `Restriction questions probe why you withhold consciousness. Use this prompt to name the sticking point—biology, particular circuits, missing architectures, or something else—before branching into the more detailed objections.`,
+  q8a: `This question focuses on biological requirements for consciousness. Consider whether {{ENTITY}} has living tissue, metabolism, evolutionary history, or organic chemistry. If you think consciousness requires biological substrates that {{ENTITY}} lacks, answer "Yes." If functional organization might suffice regardless of substrate, answer "No."`,
   q8b: `Perhaps you require particular neural circuits such as thalamocortical loops. Choose "Yes" if specific anatomical motifs are non-negotiable, "No" if other factors might suffice.`,
   q8b2: `Some argue that only embodied agents embedded in rich environments can host experience. Reflect on how much body-based sensorimotor coupling matters to you.`,
   q8b3: `This variant asks whether the right computational architecture is missing. Think about whether symbolic, subsymbolic, or hybrid designs make a moral difference for consciousness.`,
@@ -1102,7 +1164,7 @@ for (const [id, detail] of Object.entries(endDetails)) {
   }
 }
 
-export const startId: NodeId = 'q0';
+export const startId: NodeId = 'target_select';
 
 export const getNode = (id: NodeId): Node => {
   const node = nodes[id];

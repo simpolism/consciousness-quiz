@@ -1,11 +1,17 @@
 export type Verdict = 'conscious' | 'not' | 'meta';
 
 export type NodeId =
+  | 'target_select'
   | 'q0'
+  | 'q0a'
   | 'mysterian'
   | 'q1'
+  | 'q1a'
   | 'q2'
+  | 'q2b'
   | 'q6'
+  | 'q6a'
+  | 'q6b'
   | 'illusionism'
   | 'human_exception'
   | 'q2a1'
@@ -59,6 +65,7 @@ export type NodeId =
   | 'q5a3'
   | 'noself'
   | 'q8'
+  | 'q8a'
   | 'bio_only'
   | 'q8b'
   | 'localist'
