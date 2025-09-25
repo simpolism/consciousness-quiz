@@ -22,7 +22,7 @@ const makeQuestion = (id: NodeId, text: string, yes: NodeId, no: NodeId): Questi
 export const nodes: NodeMap = {
   q0: makeQuestion(
     'q0',
-    'Do you think the question “What is consciousness?” is, in principle, answerable by humans?',
+    'Do you think humans could ever fully explain consciousness, even with future science?',
     'q1',
     'mysterian',
   ),
@@ -37,14 +37,14 @@ export const nodes: NodeMap = {
 
   q1: makeQuestion(
     'q1',
-    'Does the object have an inner point of view — something it’s like to be it?',
+    'Does the object have its own felt experience — a point of view from the inside?',
     'q2',
     'q5',
   ),
 
   q2: makeQuestion(
     'q2',
-    'Is that inner point of view real (not a mere trick or illusion)?',
+    'Is that inner point of view real, not just a story the system’s processes make up?',
     'q2a1',
     'q6',
   ),
@@ -60,7 +60,7 @@ export const nodes: NodeMap = {
     'illusionism',
     'meta',
     'Illusionism / Multiple Drafts',
-    'Consciousness is a constructed user-illusion; even our own sense of it is a brain-made narrative.',
+    'Consciousness is a constructed user-illusion; even our own sense of it is a narrative assembled by cognitive processes.',
     ['Daniel Dennett', 'Keith Frankish', 'Susan Blackmore'],
   ),
 
@@ -89,7 +89,7 @@ export const nodes: NodeMap = {
 
   q2a2: makeQuestion(
     'q2a2',
-    'Is it mainly about information being globally broadcast so many subsystems can use it at once?',
+    'Is it mainly about information being shared widely inside the mind so lots of parts can act on it at the same time?',
     'gwt',
     'q2a3',
   ),
@@ -104,7 +104,7 @@ export const nodes: NodeMap = {
 
   q2a3: makeQuestion(
     'q2a3',
-    'Do you think consciousness is mainly the brain’s predictive modeling that minimizes surprise (free energy)?',
+    'Do you think consciousness is mainly the system’s predictive modeling that minimizes surprise (reducing surprise by predicting what happens next)?',
     'pp',
     'q2a4',
   ),
@@ -139,7 +139,7 @@ export const nodes: NodeMap = {
 
   q2a5: makeQuestion(
     'q2a5',
-    'Does consciousness arise when perception includes recurrent feedback loops (not just feed-forward)?',
+    'Does being conscious require back-and-forth (feedback) loops in perception, not just one-way input?',
     'rpt',
     'q2a6',
   ),
@@ -154,7 +154,7 @@ export const nodes: NodeMap = {
 
   q2a6: makeQuestion(
     'q2a6',
-    'Is consciousness the brain’s internal model of its own attention (an “attention schema”)?',
+    'Is consciousness the system’s internal story about what it’s focusing on (an “attention schema”)?',
     'ast',
     'q2a7',
   ),
@@ -163,7 +163,7 @@ export const nodes: NodeMap = {
     'ast',
     'conscious',
     'Attention Schema Theory (AST)',
-    'Consciousness arises from the brain modeling and controlling its own attention via a simplified internal schema.',
+    'Consciousness arises from a control system modeling and guiding its own attention via a simplified internal schema.',
     ['Michael Graziano'],
   ),
 
@@ -184,17 +184,32 @@ export const nodes: NodeMap = {
 
   q2a8: makeQuestion(
     'q2a8',
-    'Do you think experience is a basic property of matter, present in tiny degrees everywhere?',
+    'Do you think experience is a basic property of matter, present in tiny sparks everywhere?',
     'panpsych',
-    'q2a9',
+    'q2a8a',
   ),
 
   panpsych: makeEnd(
     'panpsych',
     'conscious',
     'Panpsychism',
-    'All matter has proto-experiential aspects; complex systems organize them into richer consciousness.',
+    'All matter carries tiny sparks of feeling; complex systems organize them into richer consciousness.',
     ['Galen Strawson', 'Philip Goff', 'A.N. Whitehead'],
+  ),
+
+  q2a8a: makeQuestion(
+    'q2a8a',
+    'Do you think matter has hidden intrinsic qualities that ground consciousness, even if they aren’t full experiences (a neutral or Russellian monism)?',
+    'neutral_monism',
+    'q2a9',
+  ),
+
+  neutral_monism: makeEnd(
+    'neutral_monism',
+    'conscious',
+    'Russellian / Neutral Monism',
+    'Matter has built-in qualitative grounds for consciousness — neither strictly mental nor purely physical.',
+    ['Bertrand Russell', 'David Chalmers', 'Sam Coleman'],
   ),
 
   q2a9: makeQuestion(
@@ -216,7 +231,7 @@ export const nodes: NodeMap = {
     'q2a10',
     'Does consciousness come from an immaterial soul or spirit?',
     'dualism',
-    'q2a11',
+    'q2a10a',
   ),
 
   dualism: makeEnd(
@@ -227,9 +242,24 @@ export const nodes: NodeMap = {
     ['René Descartes', 'Thomas Aquinas'],
   ),
 
+  q2a10a: makeQuestion(
+    'q2a10a',
+    'Is conscious experience real but it doesn’t affect what the body or physical processes do (epiphenomenal)?',
+    'epiphenomenalism',
+    'q2a11',
+  ),
+
+  epiphenomenalism: makeEnd(
+    'epiphenomenalism',
+    'conscious',
+    'Epiphenomenalism',
+    'Experience is real yet causally inert; physical processes run things while consciousness floats alongside.',
+    ['Thomas Huxley', 'Frank Jackson (early view)'],
+  ),
+
   q2a11: makeQuestion(
     'q2a11',
-    'Is simply “there being something it’s like” sufficient (regardless of theory)?',
+    'Is simply there being a felt point of view enough to call it conscious, regardless of theory?',
     'phenom',
     'q2a12',
   ),
@@ -244,9 +274,9 @@ export const nodes: NodeMap = {
 
   q2a12: makeQuestion(
     'q2a12',
-    'If a system behaves like us with rich, flexible intelligence, is that sufficient for consciousness?',
+    'If a system acts with human-like, flexible intelligence, is that enough to call it conscious?',
     'functionalist',
-    'q2a13',
+    'q2a12a',
   ),
 
   functionalist: makeEnd(
@@ -255,6 +285,21 @@ export const nodes: NodeMap = {
     'Functionalism / Computationalism',
     'Consciousness is as consciousness does: if the functional organization and behavior fit, that suffices.',
     ['Hilary Putnam', 'Marvin Minsky'],
+  ),
+
+  q2a12a: makeQuestion(
+    'q2a12a',
+    'Do you think consciousness strongly emerges from complex physical organization even if we can’t reduce it to behavior alone?',
+    'emergent_physicalism',
+    'q2a13',
+  ),
+
+  emergent_physicalism: makeEnd(
+    'emergent_physicalism',
+    'conscious',
+    'Emergent Physicalism',
+    'Consciousness strongly emerges from highly organized physical systems, beyond what behavior or micro-physics alone can explain.',
+    ['C.D. Broad', 'Tim O’Connor', 'Roger Sperry'],
   ),
 
   q2a13: makeQuestion(
@@ -316,7 +361,12 @@ export const nodes: NodeMap = {
     ['Buddhist traditions', 'Thomas Metzinger'],
   ),
 
-  q8: makeQuestion('q8', 'What makes humans conscious but not this object?', 'bio_only', 'q8b'),
+  q8: makeQuestion(
+    'q8',
+    'Is it because only living biological brains can be conscious?',
+    'bio_only',
+    'q8b',
+  ),
 
   bio_only: makeEnd(
     'bio_only',
@@ -328,8 +378,15 @@ export const nodes: NodeMap = {
 
   q8b: makeQuestion(
     'q8b',
-    'Is it because specific brain circuits (e.g., thalamocortical/claustrum) are required?',
+    'Is it because specific brain circuits (like the thalamus working with the cortex or the claustrum) are required?',
     'localist',
+    'q8b2',
+  ),
+
+  q8b2: makeQuestion(
+    'q8b2',
+    'Is it because real consciousness needs an embodied agent interacting with the world, not just computation?',
+    'embodied_restriction',
     'q8c',
   ),
 
@@ -386,11 +443,19 @@ export const nodes: NodeMap = {
     ['B.F. Skinner', 'John Searle (Chinese Room critique)'],
   ),
 
+  embodied_restriction: makeEnd(
+    'embodied_restriction',
+    'not',
+    'Embodiment Restriction',
+    'Genuine consciousness requires lived embodiment and rich world engagement the target lacks.',
+    ['Hubert Dreyfus', 'Evan Thompson', 'Maurice Merleau-Ponty'],
+  ),
+
   restrictive_phys: makeEnd(
     'restrictive_phys',
     'not',
     'Restrictive Physicalism',
-    'Only systems with special physical organization (typically brains) qualify; the target falls short.',
+    'Only systems with special physical organization (such as particular brains) qualify; the target falls short.',
     ['Contemporary physicalist skeptics'],
   ),
 };
