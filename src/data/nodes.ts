@@ -1017,12 +1017,7 @@ export const nodes: NodeMap = {
     ],
   ),
 
-  q8d: makeQuestion(
-    'q8d',
-    `Is it because {{ENTITY}} lacks a soul?`,
-    'dualist_exclusion',
-    'q8e',
-  ),
+  q8d: makeQuestion('q8d', `Is it because {{ENTITY}} lacks a soul?`, 'dualist_exclusion', 'q8e'),
 
   dualist_exclusion: makeEnd(
     'dualist_exclusion',

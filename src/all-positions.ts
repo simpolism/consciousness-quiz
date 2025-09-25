@@ -94,14 +94,24 @@ function renderPage(): void {
     const activeElement = document.activeElement as HTMLElement | null;
     const wasSearchFocused =
       activeElement instanceof HTMLInputElement && activeElement.id === 'positions-search-input';
-    const selectionStart = wasSearchFocused ? activeElement.selectionStart ?? activeElement.value.length : null;
-    const selectionEnd = wasSearchFocused ? activeElement.selectionEnd ?? activeElement.value.length : null;
+    const selectionStart = wasSearchFocused
+      ? (activeElement.selectionStart ?? activeElement.value.length)
+      : null;
+    const selectionEnd = wasSearchFocused
+      ? (activeElement.selectionEnd ?? activeElement.value.length)
+      : null;
 
-    const filteredByVerdict = selectedVerdict === 'all' ? endNodes : groupedNodes[selectedVerdict] || [];
+    const filteredByVerdict =
+      selectedVerdict === 'all' ? endNodes : groupedNodes[selectedVerdict] || [];
     const normalizedSearch = searchTerm.trim().toLowerCase();
     const displayNodes = normalizedSearch
       ? filteredByVerdict.filter((node) => {
-          const haystack = [node.title, node.desc, node.detail ?? '', ...node.references.map((ref) => `${ref.thinker} ${ref.work}`)]
+          const haystack = [
+            node.title,
+            node.desc,
+            node.detail ?? '',
+            ...node.references.map((ref) => `${ref.thinker} ${ref.work}`),
+          ]
             .join(' ')
             .toLowerCase();
           return haystack.includes(normalizedSearch);

@@ -28,6 +28,7 @@ This is a TypeScript + Vite single-page application that implements an interacti
 ### Decision Tree Architecture
 
 The application uses a node-based decision tree where:
+
 - **Question Nodes** present philosophical questions with multiple choice answers
 - **End Nodes** represent specific consciousness theories with verdicts (`conscious`, `not`, `meta`)
 - Each node has a unique `NodeId` that enables navigation through the tree

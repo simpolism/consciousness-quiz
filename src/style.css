@@ -181,7 +181,10 @@ button {
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -416,7 +419,6 @@ details summary {
   text-transform: uppercase;
 }
 
-
 .positions-layout {
   max-width: var(--content-width);
   margin: 0 auto;
@@ -484,7 +486,9 @@ details summary {
   cursor: pointer;
   background: var(--panel);
   color: var(--text);
-  transition: border-color 0.15s ease, background 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
 }
 
 .positions-select:hover {
@@ -613,7 +617,9 @@ details summary {
   font-size: 0.95rem;
   background: rgba(9, 20, 38, 0.85);
   color: var(--text);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 .positions-search input:focus-visible {
   outline: none;

@@ -101,7 +101,12 @@ export class QuizApp {
     this.elements.startBtn.addEventListener('click', () => this.startQuiz());
     this.elements.rejectBtn.addEventListener('click', () => this.rejectConcept());
 
-    [this.elements.backBtn, this.elements.restartBtn, this.elements.startBtn, this.elements.rejectBtn].forEach((btn) => {
+    [
+      this.elements.backBtn,
+      this.elements.restartBtn,
+      this.elements.startBtn,
+      this.elements.rejectBtn,
+    ].forEach((btn) => {
       btn.addEventListener('pointerup', () => btn.blur());
       btn.addEventListener('pointerleave', () => btn.blur());
     });
@@ -139,11 +144,15 @@ export class QuizApp {
     // Capture target selection
     if (this.state.current === 'target_select') {
       const targetMap = {
-        'ai': { id: 'ai', label: 'An AI system or chatbot', entityTerm: 'this AI system' },
-        'animal': { id: 'animal', label: 'An animal (dog, dolphin, etc.)', entityTerm: 'this animal' },
-        'robot': { id: 'robot', label: 'A robot or artificial agent', entityTerm: 'this robot' },
-        'human': { id: 'human', label: 'A human in an unusual state', entityTerm: 'this human' },
-        'other': { id: 'other', label: 'Something else', entityTerm: 'this entity' }
+        ai: { id: 'ai', label: 'An AI system or chatbot', entityTerm: 'this AI system' },
+        animal: {
+          id: 'animal',
+          label: 'An animal (dog, dolphin, etc.)',
+          entityTerm: 'this animal',
+        },
+        robot: { id: 'robot', label: 'A robot or artificial agent', entityTerm: 'this robot' },
+        human: { id: 'human', label: 'A human in an unusual state', entityTerm: 'this human' },
+        other: { id: 'other', label: 'Something else', entityTerm: 'this entity' },
       };
       this.state.selectedTarget = targetMap[option.id as keyof typeof targetMap] || targetMap.other;
     }
@@ -195,7 +204,9 @@ export class QuizApp {
     this.elements.question.classList.remove('question--label');
     const processedText = this.replaceTargetPlaceholders(node.text);
     const processedDetail = node.detail ? this.replaceTargetPlaceholders(node.detail) : '';
-    const detail = processedDetail ? `<details class="question-detail"><summary>More context</summary><p>${escapeHtml(processedDetail)}</p></details>` : '';
+    const detail = processedDetail
+      ? `<details class="question-detail"><summary>More context</summary><p>${escapeHtml(processedDetail)}</p></details>`
+      : '';
     this.elements.question.innerHTML = `<div class="question-text">${escapeHtml(processedText)}</div>${detail}`;
     this.setOptionControls({ visible: true, disabled: false });
     const noHistory = this.state.history.length === 0;
@@ -265,7 +276,11 @@ export class QuizApp {
 
     return text
       .replace(/\{\{ENTITY\}\}/g, this.state.selectedTarget.entityTerm)
-      .replace(/\{\{ENTITY_CAP\}\}/g, this.state.selectedTarget.entityTerm.charAt(0).toUpperCase() + this.state.selectedTarget.entityTerm.slice(1));
+      .replace(
+        /\{\{ENTITY_CAP\}\}/g,
+        this.state.selectedTarget.entityTerm.charAt(0).toUpperCase() +
+          this.state.selectedTarget.entityTerm.slice(1),
+      );
   }
 
   private renderResult(node: Node): void {
@@ -351,7 +366,9 @@ export class QuizApp {
 
   private setOptionControls({ visible, disabled }: { visible: boolean; disabled: boolean }): void {
     this.elements.controls.style.display = visible ? '' : 'none';
-    const buttons = Array.from(this.elements.controls.querySelectorAll<HTMLButtonElement>('button'));
+    const buttons = Array.from(
+      this.elements.controls.querySelectorAll<HTMLButtonElement>('button'),
+    );
     buttons.forEach((button) => {
       button.disabled = disabled;
     });
