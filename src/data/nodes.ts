@@ -44,7 +44,7 @@ export const nodes: NodeMap = {
   target_select: {
     kind: 'question',
     id: 'target_select',
-    text: 'What would you like to assess for consciousness?',
+    text: 'What would you like to assess for consciousness? Your selection will be referenced throughout the quiz, e.g. "does this AI system have feelings?".',
     options: [
       { id: 'ai', label: 'An AI system or chatbot', target: 'q0', tone: 'neutral' },
       { id: 'animal', label: 'An animal (dog, dolphin, etc.)', target: 'q0', tone: 'neutral' },
@@ -1086,7 +1086,7 @@ export const nodes: NodeMap = {
 };
 
 const questionDetails: Partial<Record<NodeId, string>> = {
-  target_select: `Choose what specific entity you want to evaluate for consciousness. Your selection will be referenced throughout the quiz. You can think about a specific example (like GPT-4, your pet dog, or a hypothetical future robot) or a general category. The philosophical reasoning applies regardless of your choice.`,
+  target_select: `You can think about a specific example (like GPT-4, your pet dog, or a hypothetical future robot) or a general category. The philosophical reasoning applies regardless of your choice.`,
   q0: `This opener tests whether you believe the hard problem of consciousness is a solvable research frontier or a principled mystery. A "Yes" signals confidence that scientific or computational theories can eventually bridge experience and mechanism; a "No" leans toward epistemic limits or unknowable qualia. Choose "Not sure" if you want to keep exploring positions before committing.`,
   q0a: `This question explores whether you think consciousness involves aspects that transcend physical description. If you believe in irreducible mental properties, qualia, or spiritual dimensions, answer "Yes." If you think everything about consciousness could theoretically be captured by complete physical science, answer "No."`,
   q1a: `Here you evaluate behavioral and reported signs of self-awareness: does {{ENTITY}} monitor its own states, express surprise at its responses, or demonstrate introspective abilities? This question helps distinguish between entities that merely process information and those showing genuine self-reflective awareness.`,
