@@ -221,7 +221,7 @@ export class QuizApp {
       const button = document.createElement('button');
       button.type = 'button';
       button.className = this.getOptionButtonClass(option);
-      button.textContent = option.label;
+      button.textContent = this.replaceTargetPlaceholders(option.label);
       button.addEventListener('click', () => this.go(option));
       button.addEventListener('pointerup', () => button.blur());
       button.addEventListener('pointerleave', () => button.blur());
