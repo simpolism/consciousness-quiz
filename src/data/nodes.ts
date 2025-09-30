@@ -100,6 +100,15 @@ export const nodes: NodeMap = {
     `Do you think consciousness involves non-physical properties that science cannot capture?`,
     'q1a',
     'q1',
+    undefined,
+    [
+      {
+        id: 'unsure',
+        label: 'Not sure',
+        target: 'q1',
+        tone: 'neutral',
+      },
+    ],
   ),
 
   q1a: makeQuestion(
@@ -107,6 +116,15 @@ export const nodes: NodeMap = {
     `Does {{ENTITY}} show clear signs of self-awareness and introspection?`,
     'q1',
     'q2b',
+    undefined,
+    [
+      {
+        id: 'unsure',
+        label: 'Not sure',
+        target: 'q1',
+        tone: 'neutral',
+      },
+    ],
   ),
 
   q2b: makeQuestion(
@@ -134,6 +152,15 @@ export const nodes: NodeMap = {
     `Does {{ENTITY}} have its own felt experience — a point of view from the inside?`,
     'q2',
     'q5',
+    undefined,
+    [
+      {
+        id: 'unsure',
+        label: 'Not sure',
+        target: 'q2a1',
+        tone: 'neutral',
+      },
+    ],
   ),
 
   q2: makeQuestion(
@@ -157,6 +184,15 @@ export const nodes: NodeMap = {
     `If it's a trick, is your own sense of being conscious also a trick?`,
     'q6a',
     'q6b',
+    undefined,
+    [
+      {
+        id: 'unsure',
+        label: 'Not sure',
+        target: 'q6a',
+        tone: 'neutral',
+      },
+    ],
   ),
 
   q6a: makeQuestion(
@@ -212,6 +248,15 @@ export const nodes: NodeMap = {
     `Is consciousness primarily about how much information {{ENTITY}} integrates into a unified whole?`,
     'iit',
     'q2a2',
+    undefined,
+    [
+      {
+        id: 'unsure',
+        label: 'Not sure',
+        target: 'q2a2',
+        tone: 'neutral',
+      },
+    ],
   ),
 
   iit: makeEnd(
@@ -389,6 +434,15 @@ export const nodes: NodeMap = {
     `Do you think experience is a basic property of matter, present everywhere in proto-conscious form?`,
     'panpsych',
     'q2a8a',
+    undefined,
+    [
+      {
+        id: 'unsure',
+        label: 'Not sure',
+        target: 'q2a8a',
+        tone: 'neutral',
+      },
+    ],
   ),
 
   panpsych: makeEnd(
@@ -501,6 +555,15 @@ export const nodes: NodeMap = {
     `Does consciousness come from an immaterial soul or spirit?`,
     'dualism',
     'q2a10a',
+    undefined,
+    [
+      {
+        id: 'unsure',
+        label: 'Not sure',
+        target: 'q2a10a',
+        tone: 'neutral',
+      },
+    ],
   ),
 
   dualism: makeEnd(
@@ -660,6 +723,15 @@ export const nodes: NodeMap = {
     `If {{ENTITY}} acts with human-like flexible intelligence, is that enough?`,
     'functionalist',
     'q2a12b',
+    undefined,
+    [
+      {
+        id: 'unsure',
+        label: 'Not sure',
+        target: 'q2a12b',
+        tone: 'neutral',
+      },
+    ],
   ),
 
   functionalist: makeEnd(
@@ -796,6 +868,15 @@ export const nodes: NodeMap = {
     `If it has no inner view, do you think humans also lack real inner experience?`,
     'q5a',
     'q8',
+    undefined,
+    [
+      {
+        id: 'unsure',
+        label: 'Not sure',
+        target: 'q8',
+        tone: 'neutral',
+      },
+    ],
   ),
 
   q5a: makeQuestion(
@@ -890,6 +971,15 @@ export const nodes: NodeMap = {
     `Is it primarily about biological requirements—does {{ENTITY}} lack living tissue, metabolism, evolutionary history?`,
     'bio_only',
     'q8b',
+    undefined,
+    [
+      {
+        id: 'unsure',
+        label: 'Not sure',
+        target: 'q8b',
+        tone: 'neutral',
+      },
+    ],
   ),
 
   bio_only: makeEnd(
