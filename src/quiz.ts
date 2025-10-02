@@ -41,7 +41,8 @@ const template = `
       <div class="card" id="quiz">
       <div class="intro-card" id="introCard">
         <h2>How to approach this quiz</h2>
-        <p>These prompts map philosophical stances about consciousness. There are no right answers—use your intuitions, and feel free to consult the "More context" dropdowns if a question feels vague. When ready, start the quiz below.</p>
+        <p>You are going to be assessing whether an entity of your choice, hypothetical or real, is conscious. Think of it now. First you will be asked what kind of entity it is, and then you will answer questions about its experience or about consciousness itself.</p>
+        <p>There are no right or wrong answers—use your intuitions, and feel free to consult the "More context" dropdowns if a question feels vague. When ready, start the quiz below.</p>
         <button class="control-button control-button--choice" id="startQuizBtn">Begin the quiz</button>
         <button class="control-button control-button--ghost" id="rejectConceptBtn">Consciousness is an incoherent concept</button>
       </div>

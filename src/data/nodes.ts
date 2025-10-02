@@ -44,7 +44,7 @@ export const nodes: NodeMap = {
   target_select: {
     kind: 'question',
     id: 'target_select',
-    text: 'What would you like to assess for consciousness? Your selection will be referenced throughout the quiz, e.g. "does this AI system have feelings?".',
+    text: 'What would you like to assess for consciousness? Your selection will be referenced throughout the quiz but otherwise does not affect the final outcome.',
     options: [
       { id: 'ai', label: 'An AI system or chatbot', target: 'q0', tone: 'neutral' },
       { id: 'animal', label: 'An animal (dog, dolphin, etc.)', target: 'q0', tone: 'neutral' },
